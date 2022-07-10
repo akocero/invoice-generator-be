@@ -8,6 +8,7 @@ import cors from 'cors';
 import authRouter from './routes/auth.routes.js';
 import itemRouter from './routes/item.routes.js';
 import customerRouter from './routes/customer.routes.js';
+import invoiceRouter from './routes/invoice.routes.js';
 
 // middlewares / utilities
 import AppError from './utils/appError.js';
@@ -31,6 +32,7 @@ app.use(urlencoded({ extended: false }));
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/customers', customerRouter);
 app.use('/api/v1/items', itemRouter);
+app.use('/api/v1/invoices', invoiceRouter);
 
 app.use((req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

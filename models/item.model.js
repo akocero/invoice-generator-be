@@ -13,7 +13,7 @@ const itemSchema = new Schema(
 		},
 		unitCost: {
 			type: Number,
-			required: [true, 'Unit Price is required'],
+			required: [true, 'Unit Cost is required'],
 		},
 		quantity: {
 			type: Number,

@@ -22,9 +22,21 @@ const customerSchema = new Schema(
 		homeAddress: {
 			type: String,
 		},
+		streetAddress: {
+			type: String
+		},
+		city: {
+			type: String
+		},
+		state: {
+			type: String
+		},
+		zipCode: {
+			type: String
+		},
 		mobileNumber: {
 			type: String,
-			required: [true, 'Last Name is required'],
+			required: [true, 'Mobile Number is required'],
 		},
 		description: {
 			type: String,
