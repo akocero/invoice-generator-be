@@ -43,8 +43,8 @@ const invoiceSchema = new Schema(
 		],
 		discount: {
 			code: String,
-			kind: String,
-			value: Number,
+			discountKind: String,
+			discountValue: Number,
 		},
 		shippingFee: {
 			type: Number,
