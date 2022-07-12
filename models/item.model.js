@@ -19,6 +19,9 @@ const itemSchema = new Schema(
 			type: Number,
 			defaultL: 0,
 		},
+		sku: {
+			type: String,
+		},
 	},
 	{ timestamps: true },
 );
