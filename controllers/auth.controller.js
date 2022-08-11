@@ -5,22 +5,25 @@ import AppError from '../utils/appError.js';
 import sendEmail from '../utils/email.js';
 import crypto from 'crypto';
 
-const generateToken = (id, res) => {
-	const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+const createToken = (id) => {
+	return jwt.sign({ id }, process.env.JWT_SECRET, {
 		expiresIn: process.env.JWT_EXPIRES_IN,
 	});
+};
 
-	// const cookieOptions = {
-	// 	expires: new Date(
-	// 		Date.now() +
-	// 			process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
-	// 	),
-	// 	httpOnly: true,
-	// };
+const createAndSendToken = (user, req, res) => {
+	const token = createToken(user._id);
 
-	// // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+	res.cookie('jwt', token, {
+		expires: new Date(
+			Date.now() +
+				process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+		),
+		httpOnly: true,
+		secure: false,
+		//   secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
+	});
 
-	// res.cookie('jwt', token, cookieOptions);
 	return token;
 };
 
@@ -33,6 +36,8 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 const forgotPassword = async (req, res, next) => {
+
+	console.log()
 	const user = await User.findOne({ email: req.body.email });
 	if (!user) {
 		return next(new AppError('This email is not exist', 404));
@@ -42,9 +47,13 @@ const forgotPassword = async (req, res, next) => {
 	// saving user details without validation
 	user.save({ validateBeforeSave: false });
 
-	const resetURL = `${req.protocol}://${req.get(
-		'host',
-	)}/api/v1/auth/resetPassword/${resetToken}`;
+
+
+	// const resetURL = `${req.protocol}://${req.get(
+	// 	'host',
+	// )}/api/v1/auth/resetPassword/${resetToken}`;
+
+	const resetURL = `${req.headers.origin}/auth/reset_password/${resetToken}`;
 
 	const message = `Forgot you password? Submit a PATCH request with your new password to: ${resetURL}. \n If you didn't forget your password, please ignore this email!`;
 
@@ -174,12 +183,16 @@ const register = async (req, res, next) => {
 	if (!user) {
 		return next(new AppError('Invalid inputs', 400));
 	}
-	const token = generateToken(user._id, res);
+
+	const token = createAndSendToken(user, req, res);
+
 	res.status(201).json({
-		_id: user.id,
-		name: user.name,
-		email: user.email,
-		token: token,
+		user: {
+			_id: user.id,
+			name: user.name,
+			email: user.email,
+		},
+		token,
 	});
 };
 
@@ -195,20 +208,21 @@ const login = async (req, res, next) => {
 	if (!user || !(await user.comparePassword(password, user.password))) {
 		return next(new AppError('Incorrect email or password', 401));
 	}
-	const token = generateToken(user._id, res);
+
+	const token = createAndSendToken(user, req, res);
+
 	res.json({
-		_id: user.id,
-		name: user.name,
-		email: user.email,
-		token: token,
+		user: {
+			_id: user.id,
+			name: user.name,
+			email: user.email,
+		},
+		token,
 	});
 };
 
 const me = async (req, res) => {
-	res.status(200).json({
-		status: 'success',
-		data: req.user
-	});
+	res.status(200).json(req.user);
 };
 
 const updatePassword = async (req, res, next) => {
@@ -230,11 +244,13 @@ const updatePassword = async (req, res, next) => {
 	user.passwordConfirm = passwordConfirm;
 	await user.save();
 
+	const token = createAndSendToken(user, req, res);
+
 	res.json({
 		_id: user.id,
 		name: user.name,
 		email: user.email,
-		token: generateToken(user._id),
+		token,
 	});
 };
 

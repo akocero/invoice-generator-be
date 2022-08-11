@@ -7,10 +7,14 @@ const customerSchema = new Schema(
 		firstName: {
 			type: String,
 			required: [true, 'First Name is required'],
+			lowercase: true, 
+			trim: true
 		},
 		lastName: {
 			type: String,
 			required: [true, 'Last Name is required'],
+			lowercase: true, 
+			trim: true
 		},
 		email: {
 			type: String,

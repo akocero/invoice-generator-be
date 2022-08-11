@@ -1,5 +1,6 @@
 class QueryBuilder {
 	constructor(query, queryString) {
+		this.filteredData = false;
 		this.query = query;
 		this.queryString = queryString;
 	}
@@ -12,9 +13,13 @@ class QueryBuilder {
 		// 1B) Advanced filtering
 		let queryStr = JSON.stringify(queryObj);
 		queryStr = queryStr.replace(
-			/\b(gte|gt|lte|lt)\b/g,
+			/\b(gte|gt|lte|lt|regex)\b/g,
 			(match) => `$${match}`,
 		);
+
+		if (queryStr !== '{}') {
+			this.filteredData = JSON.parse(queryStr);
+		}
 
 		this.query = this.query.find(JSON.parse(queryStr));
 
@@ -45,7 +50,7 @@ class QueryBuilder {
 
 	paginate() {
 		const page = this.queryString.page * 1 || 1;
-		const limit = this.queryString.limit * 1 || 1000;
+		const limit = this.queryString.limit * 1 || 20;
 		const skip = (page - 1) * limit;
 
 		this.query = this.query.skip(skip).limit(limit);
