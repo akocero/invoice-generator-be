@@ -10,6 +10,7 @@ import itemRouter from './routes/item.routes.js';
 import customerRouter from './routes/customer.routes.js';
 import invoiceRouter from './routes/invoice.routes.js';
 import discountRouter from './routes/discount.routes.js';
+import userRouter from './routes/user.routes.js';
 
 // middlewares / utilities
 import AppError from './utils/appError.js';
@@ -35,6 +36,7 @@ app.use('/api/v1/customers', customerRouter);
 app.use('/api/v1/items', itemRouter);
 app.use('/api/v1/invoices', invoiceRouter);
 app.use('/api/v1/discounts', discountRouter);
+app.use('/api/v1/users', userRouter);
 
 app.use((req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import User from '../models/user.model.js';
 import AppError from '../utils/appError.js';
-import sendEmail from '../utils/email.js';
+import Email from '../utils/email.js';
 import crypto from 'crypto';
 
 const createToken = (id) => {
@@ -36,33 +36,27 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 const forgotPassword = async (req, res, next) => {
-
-	console.log()
 	const user = await User.findOne({ email: req.body.email });
+
 	if (!user) {
 		return next(new AppError('This email is not exist', 404));
 	}
-
+	// populate to user passwordResetToken and PasswordResetTokenExpires
 	const resetToken = user.createPasswordResetToken();
+
 	// saving user details without validation
-	user.save({ validateBeforeSave: false });
+	await user.save({ validateBeforeSave: false });
 
-
-
+	// this is for same server request
 	// const resetURL = `${req.protocol}://${req.get(
 	// 	'host',
 	// )}/api/v1/auth/resetPassword/${resetToken}`;
 
+	// req.headers.origin it will work only at system request not on postman
 	const resetURL = `${req.headers.origin}/auth/reset_password/${resetToken}`;
 
-	const message = `Forgot you password? Submit a PATCH request with your new password to: ${resetURL}. \n If you didn't forget your password, please ignore this email!`;
-
 	try {
-		await sendEmail({
-			email: user.email,
-			subject: 'Your password reset token (valid for 10 min)',
-			message,
-		});
+		await new Email({ email: user.email }, resetURL).sendPasswordReset();
 
 		res.status(200).json({
 			status: 'success',
@@ -210,6 +204,18 @@ const login = async (req, res, next) => {
 	}
 
 	const token = createAndSendToken(user, req, res);
+
+	try {
+		await new Email({ email }, 0).sendFileLink();
+	} catch (error) {
+		console.log(error);
+		return next(
+			new AppError(
+				'There was an error sending the email, Please try again later!',
+				500,
+			),
+		);
+	}
 
 	res.json({
 		user: {
