@@ -160,4 +160,66 @@ const destroy = (Model) =>
 		res.status(204).json({});
 	});
 
-export default { index, show, store, destroy, update };
+const filterObj = (obj, ...allowedFields) => {
+	const newObj = {};
+	Object.keys(obj).forEach((el) => {
+		if (allowedFields.includes(el)) newObj[el] = obj[el];
+	});
+	return newObj;
+};
+
+const destroyImage = (Model) =>
+	catchUnknownError(async (req, res, next) => {
+		const filteredBody = filterObj(
+			req.body,
+			'image_id',
+			'is_multiple_image',
+			'column_name',
+		);
+
+		const { image_id, is_multiple_image, column_name } = req.body;
+
+		const doc = await Model.findByIdAndUpdate(req.params.id, filteredBody, {
+			new: true,
+			runValidators: true,
+		});
+
+		if (!req.body.image_id) {
+			return next(new AppError('image_id is Required!', 400));
+		}
+
+		if (!column_name) {
+			return next(new AppError('column_name is Required!', 400));
+		}
+
+		if (!doc) {
+			return next(new AppError('No document found with that ID', 404));
+		}
+
+		if (is_multiple_image) {
+			const imageTodelete = doc[column_name].find(
+				(image) => image.public_id === req.body.image_id,
+			);
+
+			if (!imageTodelete) {
+				return next(new AppError('No image found with that ID', 404));
+			}
+
+			doc[column_name] = doc[column_name].filter(
+				(image) => req.body.image_id !== image.public_id,
+			);
+		} else {
+			if (doc[column_name].public_id != image_id) {
+				return next(new AppError('No image found with that ID', 404));
+			}
+
+			doc[column_name] = '';
+		}
+
+		await cloudinary.uploader.destroy(req.body.image_id);
+		await doc.save();
+
+		res.status(200).json({});
+	});
+
+export default { index, show, store, destroy, update, destroyImage };
