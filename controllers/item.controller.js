@@ -8,5 +8,6 @@ const store = factory.store(Item);
 const show = factory.show(Item);
 const update = factory.update(Item);
 const destroy = factory.destroy(Item);
+const destroyImage = factory.destroyImage(Item);
 
-export { index, store, show, destroy, update };
+export { index, store, show, destroy, update, destroyImage };

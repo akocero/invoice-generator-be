@@ -11,17 +11,51 @@ const itemSchema = new Schema(
 		description: {
 			type: String,
 		},
+		purchaseNote: {
+			type: String,
+		},
 		unitCost: {
 			type: Number,
 			required: [true, 'Unit Cost is required'],
 		},
 		quantity: {
 			type: Number,
-			defaultL: 0,
+			default: 0,
 		},
 		sku: {
 			type: String,
 		},
+		images: [
+			{
+				public_id: String,
+				secure_url: String,
+				width: Number,
+				height: Number,
+			},
+		],
+		coverPhoto: {
+			public_id: String,
+			secure_url: String,
+			width: Number,
+			height: Number,
+		},
+		salePrice: {
+			type: Number,
+		},
+		fileDownloadLink: {
+			type: String,
+		},
+		tags: [
+			{
+				type: String,
+			},
+		],
+		categories: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Category',
+			},
+		],
 	},
 	{ timestamps: true },
 );
