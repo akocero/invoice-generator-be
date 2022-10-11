@@ -14,6 +14,10 @@ const ecommSettingSchema = new Schema(
 					required: [true, 'Name is required'],
 					unique: [true, 'Name already exist'],
 				},
+				isActive: {
+					type: Boolean,
+					default: false,
+				},
 			},
 		],
 		heros: [

@@ -12,6 +12,7 @@ import invoiceRouter from './routes/invoice.routes.js';
 import discountRouter from './routes/discount.routes.js';
 import userRouter from './routes/user.routes.js';
 import categoryRouter from './routes/category.routes.js';
+import ecommSettingRouter from './routes/ecomm_setting.routes.js';
 
 // middlewares / utilities
 import AppError from './utils/appError.js';
@@ -39,6 +40,7 @@ app.use('/api/v1/invoices', invoiceRouter);
 app.use('/api/v1/discounts', discountRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/ecomm_settings', ecommSettingRouter);
 
 app.use((req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
