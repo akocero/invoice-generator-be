@@ -205,17 +205,18 @@ const login = async (req, res, next) => {
 
 	const token = createAndSendToken(user, req, res);
 
-	try {
-		await new Email({ email }, 0).sendFileLink();
-	} catch (error) {
-		console.log(error);
-		return next(
-			new AppError(
-				'There was an error sending the email, Please try again later!',
-				500,
-			),
-		);
-	}
+	// remove email sending when login
+	// try {
+	// 	await new Email({ email }, 0).sendFileLink();
+	// } catch (error) {
+	// 	console.log(error);
+	// 	return next(
+	// 		new AppError(
+	// 			'There was an error sending the email, Please try again later!',
+	// 			500,
+	// 		),
+	// 	);
+	// }
 
 	res.json({
 		user: {
