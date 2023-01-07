@@ -22,6 +22,10 @@ const itemSchema = new Schema(
 			type: Number,
 			default: 0,
 		},
+		soldCount: {
+			type: Number,
+			default: 0,
+		},
 		sku: {
 			type: String,
 		},
