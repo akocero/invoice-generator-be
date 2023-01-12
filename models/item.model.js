@@ -49,17 +49,27 @@ const itemSchema = new Schema(
 		fileDownloadLink: {
 			type: String,
 		},
+		// TODO: Need to improve this category and tags
 		tags: [
 			{
-				type: String,
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Tag',
 			},
 		],
-		categories: [
+		// category: {
+		// 	type: mongoose.Schema.Types.ObjectId,
+		// 	ref: 'Category',
+		// },
+		collections: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Category',
+				ref: 'Collection',
 			},
 		],
+		isPublished: {
+			type: Number,
+			default: 1,
+		},
 	},
 	{ timestamps: true },
 );

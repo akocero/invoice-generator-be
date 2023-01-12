@@ -13,7 +13,7 @@ class QueryBuilder {
 		// 1B) Advanced filtering
 		let queryStr = JSON.stringify(queryObj);
 		queryStr = queryStr.replace(
-			/\b(gte|gt|lte|lt|regex)\b/g,
+			/\b(gte|gt|lte|lt|regex|all|in)\b/g,
 			(match) => `$${match}`,
 		);
 
@@ -21,6 +21,8 @@ class QueryBuilder {
 			this.filteredData = JSON.parse(queryStr);
 		}
 
+		console.log('parsed', queryStr);
+		 // queryStr = '{tags:{"$all":["cheap","blue"]}}'
 		this.query = this.query.find(JSON.parse(queryStr));
 
 		return this;

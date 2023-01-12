@@ -11,8 +11,9 @@ import customerRouter from './routes/customer.routes.js';
 import invoiceRouter from './routes/invoice.routes.js';
 import discountRouter from './routes/discount.routes.js';
 import userRouter from './routes/user.routes.js';
-import categoryRouter from './routes/category.routes.js';
+import collectionRouter from './routes/collection.routes.js';
 import ecommSettingRouter from './routes/ecomm_setting.routes.js';
+import tagRouter from './routes/tag.routes.js';
 
 // middlewares / utilities
 import AppError from './utils/appError.js';
@@ -39,7 +40,8 @@ app.use('/api/v1/items', itemRouter);
 app.use('/api/v1/invoices', invoiceRouter);
 app.use('/api/v1/discounts', discountRouter);
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/collections', collectionRouter);
+app.use('/api/v1/tags', tagRouter);
 app.use('/api/v1/ecomm_settings', ecommSettingRouter);
 
 app.use((req, res, next) => {

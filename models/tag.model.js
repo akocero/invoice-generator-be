@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const categorySchema = new Schema(
+const tagSchema = new Schema(
 	{
 		name: {
 			type: String,
@@ -12,4 +12,4 @@ const categorySchema = new Schema(
 	{ timestamps: true },
 );
 
-export default mongoose.model('category', categorySchema);
+export default mongoose.model('tag', tagSchema);
