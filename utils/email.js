@@ -121,6 +121,20 @@ class Email {
 		});
 	}
 
+	async sendOrderDetails() {
+		await this.send('order', 'Welcome to the Papierenei Family!', {
+			name: 'John Doe',
+			people: [
+				{ name: 'Pencil', qty: 1, total: 20 },
+				{
+					name: 'Glue',
+					qty: 1,
+					total: 20,
+				},
+			],
+		});
+	}
+
 	async sendPasswordReset() {
 		await this.send(
 			'password_reset',
