@@ -6,17 +6,11 @@ import {
 	update,
 	show,
 	destroy,
-	sendEmailOrderDetails,
-} from '../controllers/order.controller.js';
+} from '../controllers/payment.controller.js';
 import upload from '../utils/multer.js';
 import auth from '../middlewares/auth.js';
-import { catchUnknownError } from '../middlewares/catchUnknownError.js';
 
 router.get('/', index);
-router.get(
-	'/send_email_order_details/:id',
-	catchUnknownError(sendEmailOrderDetails),
-);
 router.get('/:id', show);
 router.patch('/:id', auth.protect, upload.single('image'), update);
 router.post('/', auth.protect, upload.single('image'), store);

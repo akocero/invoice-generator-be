@@ -15,6 +15,7 @@ import collectionRouter from './routes/collection.routes.js';
 import ecommSettingRouter from './routes/ecomm_setting.routes.js';
 import tagRouter from './routes/tag.routes.js';
 import orderRouter from './routes/order.routes.js';
+import paymentRouter from './routes/payment.routes.js';
 
 // middlewares / utilities
 import AppError from './utils/appError.js';
@@ -45,6 +46,7 @@ app.use('/api/v1/collections', collectionRouter);
 app.use('/api/v1/tags', tagRouter);
 app.use('/api/v1/ecomm_settings', ecommSettingRouter);
 app.use('/api/v1/orders', orderRouter);
+app.use('/api/v1/payments', paymentRouter);
 
 app.use((req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

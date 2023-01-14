@@ -7,10 +7,14 @@ const orderSchema = new Schema(
 		firstName: {
 			type: String,
 			required: [true, 'First Name is required'],
+			trim: true,
+			lowercase: true,
 		},
 		lastName: {
 			type: String,
 			required: [true, 'Last Name is required'],
+			trim: true,
+			lowercase: true,
 		},
 		contactNumber: {
 			type: String,
@@ -42,21 +46,43 @@ const orderSchema = new Schema(
 		},
 		items: [
 			{
+				item_id: {
+					type: String,
+					required: [true, 'Product ID is Required'],
+				},
 				name: {
 					type: String,
+					required: [true, 'Product Name is Required'],
 				},
 				qty: {
 					type: Number,
+					required: [true, 'Product Quantity is Required'],
 				},
 				price: {
 					type: Number,
+					required: [true, 'Product Price Code is Required'],
+				},
+				total: {
+					type: Number,
+					required: [true, 'Product Total Code is Required'],
 				},
 			},
 		],
+		subtotal: {
+			type: Number,
+			required: [true, 'Subtotal is Required'],
+		},
+		total: {
+			type: Number,
+			required: [true, 'Total is Required'],
+		},
 		shippingDetails: {
 			fee: {
 				type: Number,
 			},
+		},
+		discount: {
+			type: String,
 		},
 		status: {
 			type: String,

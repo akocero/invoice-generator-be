@@ -8,17 +8,19 @@ const index = factory.index(Order);
 const show = factory.show(Order);
 const update = factory.update(Order);
 const destroy = factory.destroy(Order);
+const store = factory.store(Order);
 
-const store = async (req, res, next) => {
-	const doc = await Order.create({
-		...req.body,
-	});
-	// const doc = {
-	// 	email: 'akocero15@gmail.com',
-	// };
+const sendEmailOrderDetails = async (req, res, next) => {
+	const id = req.params.id;
+
+	const doc = await Order.findById(id).select('-__v').lean();
+
+	if (!doc) {
+		return next(new AppError('No document found with that ID', 404));
+	}
 
 	try {
-		await new Email({ email: doc.email }, 0).sendOrderDetails();
+		await new Email({ email: doc.email }, 0).sendOrderDetails(doc);
 	} catch (error) {
 		console.log(error);
 		return next(
@@ -31,8 +33,8 @@ const store = async (req, res, next) => {
 
 	res.status(200).json({
 		status: 'success',
-		// data: doc,
+		message: 'Email Sent!',
 	});
 };
 
-export { index, store, show, destroy, update };
+export { index, store, show, destroy, update, sendEmailOrderDetails };

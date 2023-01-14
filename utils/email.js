@@ -115,23 +115,37 @@ class Email {
 		await this.newTransport().sendMail(mailOptions);
 	}
 
+	convertToCurrency(value) {
+		return Number(parseFloat(value).toFixed(2)).toLocaleString('en', {
+			minimumFractionDigits: 2,
+		});
+	}
+
+	convertItemsToCuurency(items) {
+		return items.map((item) => {
+			item.total = this.convertToCurrency(item.total);
+			return item;
+		});
+	}
+
 	async sendFileLink() {
 		await this.send('email', 'Welcome to the Papierenei Family!', {
 			name: 'John Doe',
 		});
 	}
 
-	async sendOrderDetails() {
+	async sendOrderDetails(orderDetails) {
+		console.log('orderDetails', orderDetails);
+
+		const { firstName, items, total, shippingDetails, subtotal } =
+			orderDetails;
+
 		await this.send('order', 'Welcome to the Papierenei Family!', {
-			name: 'John Doe',
-			people: [
-				{ name: 'Pencil', qty: 1, total: 20 },
-				{
-					name: 'Glue',
-					qty: 1,
-					total: 20,
-				},
-			],
+			firstName,
+			items: this.convertItemsToCuurency(items),
+			total: this.convertToCurrency(total),
+			subtotal: this.convertToCurrency(subtotal),
+			shippingFee: this.convertToCurrency(shippingDetails.fee),
 		});
 	}
 

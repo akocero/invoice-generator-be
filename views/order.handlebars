@@ -365,7 +365,7 @@ hr {
 												<img src="https://res.cloudinary.com/erro/image/upload/v1673604938/papierenei/logo-t_umqdfz.png" alt="" style="width: 180px;">
 												<p>Thank you for your purchase!</p>
 												<p>Hi
-													{{name}}, thank you for your
+													{{firstName}}, thank you for your
 													order.</p>
 												<p>Please review the details on
 													the invoice to ensure
@@ -387,7 +387,7 @@ hr {
 													day ahead!</p>
 												<p>Order summary:</p>
 												<ul class="">
-													{{#each people}}
+													{{#each items}}
 														<li>
 															{{ this.name }} x {{ this.qty }} ---- ₱{{this.total}}
 														</li>
@@ -396,13 +396,13 @@ hr {
 												</ul>
 												<ul class="order_list">
 														<li>
-															Subtotal: ₱1000
+															Subtotal: ₱{{ subtotal }}
 														</li>
 														<li>
-															Shipping: ₱1000
+															Shipping: ₱{{ shippingFee }}
 														</li>
 														<li>
-															Total: ₱1000
+															Total: ₱{{ total }}
 														</li>												
 												</ul>
 													
