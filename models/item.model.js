@@ -7,6 +7,8 @@ const itemSchema = new Schema(
 			type: String,
 			required: [true, 'Name is required'],
 			unique: [true, 'Name already exist'],
+			trim: true,
+			lowercase: true,
 		},
 		description: {
 			type: String,
@@ -68,7 +70,7 @@ const itemSchema = new Schema(
 		],
 		isPublished: {
 			type: Number,
-			default: 1,
+			default: 0,
 		},
 	},
 	{ timestamps: true },
