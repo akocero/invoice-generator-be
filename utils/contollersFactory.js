@@ -34,15 +34,7 @@ const paginatedResults = (totalDocuments, queryString, _query, data) => {
 const index = (Model, ...populateObject) =>
 	catchUnknownError(async (req, res) => {
 		let queryString = req.query;
-		// !this code is to remove a field in document
-		// !It will permanently deleted the field in every document
 
-		// * to get the specific model to unset a field
-		// if (req.baseUrl.includes('items')) {
-		// * this scripts is to unset or removed the field
-		// * in this example, I removed the categories field
-		// console.log(await Model.updateMany([{ $unset: 'categories' }]));
-		//}
 		let _query = new QueryBuilder(Model.find(), queryString)
 			.filter()
 			.sort()

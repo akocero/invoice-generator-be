@@ -3,18 +3,14 @@ const Schema = mongoose.Schema;
 
 const paymentSchema = new Schema(
 	{
-		order: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Order',
-		},
 		status: {
 			type: String,
-			default: 'verified',
+			required: [true, 'Payment Status is required'],
 		},
 		gateway: {
 			type: String,
 		},
-		transactionNumner: {
+		transactionNumber: {
 			type: String,
 			required: [true, 'Transaction Number is required'],
 		},
@@ -30,4 +26,4 @@ const paymentSchema = new Schema(
 	{ timestamps: true },
 );
 
-export default mongoose.model('payment', paymentSchema);
+export default mongoose.model('Payment', paymentSchema);
