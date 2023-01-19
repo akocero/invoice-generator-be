@@ -33,6 +33,12 @@ app.get('/', (req, res, next) => {
 	res.redirect('https://hxh-api.vercel.app/');
 });
 
+app.get('/api/v1', (req, res, next) => {
+	res.status(200).json({
+		message: 'Welcome to Papier Renei API Version 1!',
+	});
+});
+
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
