@@ -1,6 +1,7 @@
-import 'dotenv/config';
-import app from './app.js';
-import connectDB from './config/db.js';
+require('dotenv').config();
+// import app from './app.js';
+const connectDB = require('./config/db');
+const app = require('./app');
 
 process.on('uncaughtException', (err) => {
 	console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');

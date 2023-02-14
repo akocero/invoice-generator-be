@@ -1,25 +1,24 @@
-import express, { json, urlencoded } from 'express';
-import morgan from 'morgan';
-import 'dotenv/config';
-import cors from 'cors';
+const path = require('path');
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
 
 // routes
-
-import authRouter from './routes/auth.routes.js';
-import itemRouter from './routes/item.routes.js';
-import customerRouter from './routes/customer.routes.js';
-import invoiceRouter from './routes/invoice.routes.js';
-import discountRouter from './routes/discount.routes.js';
-import userRouter from './routes/user.routes.js';
-import collectionRouter from './routes/collection.routes.js';
-import ecommSettingRouter from './routes/ecomm_setting.routes.js';
-import tagRouter from './routes/tag.routes.js';
-import orderRouter from './routes/order.routes.js';
-import paymentRouter from './routes/payment.routes.js';
+const authRouter = require('./routes/auth.routes');
+const itemRouter = require('./routes/item.routes.js');
+const customerRouter = require('./routes/customer.routes.js');
+const invoiceRouter = require('./routes/invoice.routes.js');
+const discountRouter = require('./routes/discount.routes.js');
+const userRouter = require('./routes/user.routes.js');
+const collectionRouter = require('./routes/collection.routes.js');
+const ecommSettingRouter = require('./routes/ecomm_setting.routes.js');
+const tagRouter = require('./routes/tag.routes.js');
+const orderRouter = require('./routes/order.routes.js');
+const paymentRouter = require('./routes/payment.routes.js');
 
 // middlewares / utilities
-import AppError from './utils/appError.js';
-import globalErrorHandler from './middlewares/globalErrorHandler.js';
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./middlewares/globalErrorHandler');
 
 const app = express();
 
@@ -39,8 +38,8 @@ app.get('/api/v1', (req, res, next) => {
 	});
 });
 
-app.use(json());
-app.use(urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/customers', customerRouter);
@@ -60,4 +59,4 @@ app.use((req, res, next) => {
 
 app.use(globalErrorHandler);
 
-export default app;
+module.exports = app;

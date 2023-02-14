@@ -1,9 +1,9 @@
-import multer from 'multer';
-import path from 'path';
-import AppError from './appError.js';
+const multer = require('multer');
+const path = require('path');
+const AppError = require('./appError.js');
 
 // Multer config
-export default multer({
+module.exports = multer({
 	storage: multer.diskStorage({}),
 	fileFilter: (req, file, cb) => {
 		let ext = path.extname(file.originalname);

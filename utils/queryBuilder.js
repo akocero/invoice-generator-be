@@ -22,7 +22,7 @@ class QueryBuilder {
 		}
 
 		console.log('parsed', queryStr);
-		 // queryStr = '{tags:{"$all":["cheap","blue"]}}'
+		// queryStr = '{tags:{"$all":["cheap","blue"]}}'
 		this.query = this.query.find(JSON.parse(queryStr));
 
 		return this;
@@ -61,4 +61,4 @@ class QueryBuilder {
 	}
 }
 
-export default QueryBuilder;
+module.exports = QueryBuilder;

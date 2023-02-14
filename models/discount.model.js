@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const discountSchema = new Schema(
@@ -20,4 +20,4 @@ const discountSchema = new Schema(
 	{ timestamps: true },
 );
 
-export default mongoose.model('discount', discountSchema);
+module.exports = mongoose.model('discount', discountSchema);

@@ -1,6 +1,5 @@
-import { Router } from 'express';
-const router = Router();
-import {
+const express = require('express');
+const {
 	register,
 	login,
 	me,
@@ -9,9 +8,11 @@ import {
 	updatePassword,
 	updateMe,
 	deactivateMe,
-} from '../controllers/auth.controller.js';
-import auth from '../middlewares/auth.js';
-import { catchUnknownError } from '../middlewares/catchUnknownError.js';
+} = require('../controllers/auth.controller');
+const auth = require('../middlewares/auth');
+
+const router = express.Router();
+const { catchUnknownError } = require('../middlewares/catchUnknownError.js');
 
 router.delete('/deactivateMe', auth.protect, catchUnknownError(deactivateMe));
 router.patch('/updateMe', auth.protect, catchUnknownError(updateMe));
@@ -28,4 +29,4 @@ router.post('/login', catchUnknownError(login));
 
 router.get('/me', auth.protect, me);
 
-export default router;
+module.exports = router;

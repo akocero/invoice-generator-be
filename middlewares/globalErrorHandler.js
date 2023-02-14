@@ -1,4 +1,4 @@
-import AppError from '../utils/appError.js';
+const AppError = require('../utils/appError.js');
 
 const handleDuplicateFieldsDB = (err) => {
 	const value = err.message.match(/(["'])(\\?.)*?\1/)[0];
@@ -25,10 +25,26 @@ const handleValidationErrorDB = (err) => {
 };
 
 const dispatchDevelopmentError = (err, req, res) => {
-	return res.status(err.statusCode).json({
-		status: err.status,
-		error: err,
-		message: err.message,
+	// return res.status(err.statusCode).json({
+	// 	status: err.status,
+	// 	errors: err.errors,
+	// 	message: err.message,
+	// 	stack: err.stack,
+	// });
+	if (err.errors) {
+		return res.status(err.statusCode).json({
+			status: err.status,
+			errors: err.errors,
+			message: err.message,
+			stack: err.stack,
+		});
+	}
+
+	console.error('ERROR 💥', err);
+
+	return res.status(500).json({
+		status: 'error',
+		message: 'Something went very wrong!',
 		stack: err.stack,
 	});
 };
@@ -54,6 +70,7 @@ const dispatchProductionError = (err, req, res) => {
 	return res.status(500).json({
 		status: 'error',
 		message: 'Something went very wrong!',
+		stack: err.stack,
 	});
 };
 
@@ -61,29 +78,29 @@ const handleBadJSONFormat = (err) => {
 	return new AppError(err.message, 400);
 };
 
-export default (err, req, res, next) => {
+module.exports = (err, req, res, next) => {
 	err.statusCode = err.statusCode || 500;
 	err.status = err.status || 'error';
+	let error = { ...err };
+
+	console.log(err.message);
+
+	error.message = err.message;
+	if (err.name === 'CastError') error = handleCastErrorDB(error);
+	if (err.code === 11000) error = handleDuplicateFieldsDB(error);
+	if (err.name === 'ValidationError') error = handleValidationErrorDB(error);
+	if (err.expose) error = handleBadJSONFormat(error);
+
+	if (err.name === 'JsonWebTokenError')
+		error = new AppError('Unauthorized', 401);
+
+	if (err.name === 'TokenExpiredError')
+		error = new AppError('Expired Token', 401);
 
 	if (process.env.NODE_ENV === 'development') {
-		console.log(err.name);
-		dispatchDevelopmentError(err, req, res);
+		// console.log(err.name);
+		dispatchDevelopmentError(error, req, res);
 	} else {
-		let error = { ...err };
-
-		error.message = err.message;
-		if (err.name === 'CastError') error = handleCastErrorDB(error);
-		if (err.code === 11000) error = handleDuplicateFieldsDB(error);
-		if (err.name === 'ValidationError')
-			error = handleValidationErrorDB(error);
-		if (err.expose) error = handleBadJSONFormat(error);
-
-		if (err.name === 'JsonWebTokenError')
-			error = new AppError('Unauthorized', 401);
-
-		if (err.name === 'TokenExpiredError')
-			error = new AppError('Expired Token', 401);
-
 		dispatchProductionError(error, req, res);
 	}
 };

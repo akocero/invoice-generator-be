@@ -1,16 +1,16 @@
-import path from 'path';
-import nodemailer from 'nodemailer';
-import hbs from 'nodemailer-express-handlebars';
+const nodemailer = require('nodemailer');
+const hbs = require('nodemailer-express-handlebars');
+const path = require('path');
 
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+// import { fileURLToPath } from 'url';
+// import { dirname } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
 const viewpath = path.join(__dirname, '../views/');
 
-console.log(viewpath);
+// console.log(viewpath);
 // const sendEmail = async (options) => {
 // 	console.log(
 // 		process.env.EMAIL_HOST,
@@ -158,4 +158,4 @@ class Email {
 	}
 }
 
-export default Email;
+module.exports = Email;

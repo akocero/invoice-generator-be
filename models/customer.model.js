@@ -1,20 +1,20 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-import validator from 'validator';
+const validator = require('validator');
 
 const customerSchema = new Schema(
 	{
 		firstName: {
 			type: String,
 			required: [true, 'First Name is required'],
-			lowercase: true, 
-			trim: true
+			lowercase: true,
+			trim: true,
 		},
 		lastName: {
 			type: String,
 			required: [true, 'Last Name is required'],
-			lowercase: true, 
-			trim: true
+			lowercase: true,
+			trim: true,
 		},
 		email: {
 			type: String,
@@ -27,16 +27,16 @@ const customerSchema = new Schema(
 			type: String,
 		},
 		streetAddress: {
-			type: String
+			type: String,
 		},
 		city: {
-			type: String
+			type: String,
 		},
 		state: {
-			type: String
+			type: String,
 		},
 		zipCode: {
-			type: String
+			type: String,
 		},
 		mobileNumber: {
 			type: String,
@@ -49,4 +49,4 @@ const customerSchema = new Schema(
 	{ timestamps: true },
 );
 
-export default mongoose.model('customer', customerSchema);
+module.exports = mongoose.model('customer', customerSchema);

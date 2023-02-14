@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/user.model.js';
-import AppError from '../utils/appError.js';
-import { catchUnknownError } from './catchUnknownError.js';
+const jwt = require('jsonwebtoken');
+const User = require('../models/user.model.js');
+const AppError = require('../utils/appError.js');
+const { catchUnknownError } = require('./catchUnknownError.js');
 
-const protect = catchUnknownError(async (req, res, next) => {
+exports.protect = catchUnknownError(async (req, res, next) => {
 	let token;
 
 	if (
@@ -48,7 +48,7 @@ const protect = catchUnknownError(async (req, res, next) => {
 	next();
 });
 
-const restrictedTo = (...roles) => {
+exports.restrictedTo = (...roles) => {
 	return (req, res, next) => {
 		if (!roles.includes(req.user.role)) {
 			return next(
@@ -63,4 +63,7 @@ const restrictedTo = (...roles) => {
 	};
 };
 
-export default { protect, restrictedTo };
+// module.exports {
+// 	protect,
+// 	restrictedTo,
+// };

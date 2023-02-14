@@ -1,7 +1,7 @@
-import crypto from 'crypto';
-import mongoose from 'mongoose';
-import validator from 'validator';
-import bcrypt from 'bcryptjs';
+const crypto = require('crypto');
+const mongoose = require('mongoose');
+const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 const userSchema = mongoose.Schema(
 	{
@@ -103,4 +103,4 @@ userSchema.pre('save', function (next) {
 	next();
 });
 
-export default mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);

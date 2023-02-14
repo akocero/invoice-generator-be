@@ -1,7 +1,6 @@
-import Item from '../models/item.model.js';
-import cloudinary from '../utils/cloudinary.js';
-import factory from '../utils/contollersFactory.js';
-import AppError from '../utils/appError.js';
+const Item = require('../models/item.model.js');
+const factory = require('../utils/contollersFactory.js');
+const AppError = require('../utils/appError.js');
 
 const index = factory.index(Item);
 const store = factory.store(Item);
@@ -26,4 +25,12 @@ const updateQty = async (req, res, next) => {
 	});
 };
 
-export { index, store, show, destroy, update, destroyImage, updateQty };
+module.exports = {
+	index,
+	store,
+	show,
+	destroy,
+	update,
+	destroyImage,
+	updateQty,
+};

@@ -1,21 +1,21 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-import validator from 'validator';
+const validator = require('validator');
 
 const invoiceSchema = new Schema(
 	{
 		invoiceFor: {
 			name: {
 				type: String,
-				required: [true, 'Name is required'], 
+				required: [true, 'Name is required'],
 			},
 			mobileNumber: {
 				type: String,
-				required: [true, 'Mobile Number is required'], 
+				required: [true, 'Mobile Number is required'],
 			},
 			email: {
 				type: String,
-				required: [true, 'Email is required'], 
+				required: [true, 'Email is required'],
 			},
 			streetAddress: String,
 			city: String,
@@ -57,12 +57,10 @@ const invoiceSchema = new Schema(
 			type: Date,
 		},
 		notes: {
-			type: String
-		}
+			type: String,
+		},
 	},
 	{ timestamps: true },
 );
 
-
-
-export default mongoose.model('invoice', invoiceSchema);
+module.exports = mongoose.model('invoice', invoiceSchema);

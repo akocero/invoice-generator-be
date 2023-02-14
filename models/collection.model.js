@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const collectionSchema = new Schema(
@@ -15,4 +15,4 @@ const collectionSchema = new Schema(
 	{ timestamps: true },
 );
 
-export default mongoose.model('Collection', collectionSchema);
+module.exports = mongoose.model('Collection', collectionSchema);

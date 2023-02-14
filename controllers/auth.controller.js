@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-import User from '../models/user.model.js';
-import AppError from '../utils/appError.js';
-import Email from '../utils/email.js';
-import crypto from 'crypto';
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const User = require('../models/user.model');
+const AppError = require('../utils/appError');
+const Email = require('../utils/email.js');
+const crypto = require('crypto');
 
 const createToken = (id) => {
 	return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -261,7 +261,7 @@ const updatePassword = async (req, res, next) => {
 	});
 };
 
-export {
+module.exports = {
 	register,
 	login,
 	me,

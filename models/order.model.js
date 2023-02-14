@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-import validator from 'validator';
+const validator = require('validator');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const orderSchema = new Schema(
 	{
@@ -125,4 +126,6 @@ const orderSchema = new Schema(
 	{ timestamps: true },
 );
 
-export default mongoose.model('Order', orderSchema);
+orderSchema.plugin(AutoIncrement, { inc_field: 'orderID' });
+
+module.exports = mongoose.model('Order', orderSchema);

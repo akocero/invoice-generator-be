@@ -1,7 +1,7 @@
-import Order from '../models/order.model.js';
-import factory from '../utils/contollersFactory.js';
-import AppError from '../utils/appError.js';
-import Email from '../utils/email.js';
+const Order = require('../models/order.model.js');
+const factory = require('../utils/contollersFactory.js');
+const AppError = require('../utils/appError.js');
+const Email = require('../utils/email.js');
 
 const index = factory.index(Order);
 // const store = factory.store(Order);
@@ -37,4 +37,4 @@ const sendEmailOrderDetails = async (req, res, next) => {
 	});
 };
 
-export { index, store, show, destroy, update, sendEmailOrderDetails };
+module.exports = { index, store, show, destroy, update, sendEmailOrderDetails };

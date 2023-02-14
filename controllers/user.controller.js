@@ -1,6 +1,6 @@
-import User from '../models/user.model.js';
-import factory from '../utils/contollersFactory.js';
+const User = require('../models/user.model.js');
+const factory = require('../utils/contollersFactory.js');
 
 const index = factory.index(User);
 
-export { index };
+module.exports = { index };

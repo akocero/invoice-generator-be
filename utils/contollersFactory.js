@@ -1,7 +1,7 @@
-import { catchUnknownError } from '../middlewares/catchUnknownError.js';
-import QueryBuilder from '../utils/queryBuilder.js';
-import AppError from '../utils/appError.js';
-import cloudinary from '../utils/cloudinary.js';
+const { catchUnknownError } = require('../middlewares/catchUnknownError.js');
+const QueryBuilder = require('../utils/queryBuilder.js');
+const AppError = require('../utils/appError.js');
+const cloudinary = require('../utils/cloudinary.js');
 
 const paginatedResults = (totalDocuments, queryString, _query, data) => {
 	const currentPage = queryString.page ? parseInt(queryString.page) : 1;
@@ -215,11 +215,12 @@ const destroyImage = (Model) =>
 
 			doc[column_name] = '';
 		}
-
+		console.log(req.body.image_id);
 		await cloudinary.uploader.destroy(req.body.image_id);
+
 		await doc.save();
 
 		res.status(200).json({});
 	});
 
-export default { index, show, store, destroy, update, destroyImage };
+module.exports = { index, show, store, destroy, update, destroyImage };

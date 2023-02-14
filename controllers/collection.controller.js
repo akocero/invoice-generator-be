@@ -1,5 +1,5 @@
-import Collection from '../models/collection.model.js';
-import factory from '../utils/contollersFactory.js';
+const Collection = require('../models/collection.model.js');
+const factory = require('../utils/contollersFactory.js');
 
 const index = factory.index(Collection);
 const store = factory.store(Collection);
@@ -8,4 +8,4 @@ const update = factory.update(Collection);
 const destroy = factory.destroy(Collection);
 // const destroyImage = factory.destroyImage(Item);
 
-export { index, store, show, destroy, update };
+module.exports = { index, store, show, destroy, update };

@@ -1,14 +1,9 @@
-import { Router } from 'express';
-const router = Router();
-import { index } from '../controllers/user.controller.js';
-import auth from '../middlewares/auth.js';
-import { catchUnknownError } from '../middlewares/catchUnknownError.js';
+const express = require('express');
+const { index } = require('../controllers/user.controller.js');
+const auth = require('../middlewares/auth');
 
-router.get(
-	'/',
-	auth.protect,
-	auth.restrictedTo('admin'),
-	catchUnknownError(index),
-);
+const router = express.Router();
 
-export default router;
+router.get('/', auth.protect, auth.restrictedTo('admin'), index);
+
+module.exports = router;
