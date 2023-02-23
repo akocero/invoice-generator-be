@@ -90,6 +90,7 @@ const store = (Model, uploadImage = false) =>
 const show = (Model, ...populateObject) =>
 	catchUnknownError(async (req, res, next) => {
 		const id = req.params.id;
+		console.log('populateObject', populateObject);
 		const doc = populateObject
 			? await Model.findById(id).select('-__v').populate(populateObject)
 			: await Model.findById(id).select('-__v');
@@ -108,13 +109,12 @@ const show = (Model, ...populateObject) =>
 		});
 	});
 
-const update = (Model, uploadImage = false) =>
+const update = (Model, uploadImage = false, ...populateObject) =>
 	catchUnknownError(async (req, res, next) => {
 		const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
 			new: true,
 			runValidators: true,
 		});
-		console.log(req.params.id);
 		if (!doc) {
 			return next(new AppError('No document found with that ID', 404));
 		}
@@ -138,7 +138,11 @@ const update = (Model, uploadImage = false) =>
 			await doc.save();
 		}
 
-		res.status(200).json(doc);
+		const _doc = populateObject ? await doc.populate(populateObject) : doc;
+
+		console.log('populateObject', populateObject);
+
+		res.status(200).json(_doc);
 	});
 
 const destroy = (Model) =>

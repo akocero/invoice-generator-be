@@ -33,18 +33,16 @@ const itemSchema = new Schema(
 		},
 		images: [
 			{
-				public_id: String,
-				secure_url: String,
-				width: Number,
-				height: Number,
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Image',
 			},
 		],
-		coverPhoto: {
-			public_id: String,
-			secure_url: String,
-			width: Number,
-			height: Number,
-		},
+		coverPhoto: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Image',
+			},
+		],
 		salePrice: {
 			type: Number,
 		},

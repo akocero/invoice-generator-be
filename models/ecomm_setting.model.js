@@ -22,15 +22,24 @@ const ecommSettingSchema = new Schema(
 		],
 		heros: [
 			{
-				public_id: String,
-				secure_url: String,
-				width: Number,
-				height: Number,
-				isActive: Boolean,
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Image',
 			},
 		],
+		navbarBGs: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Image',
+			},
+		],
+		activeHero: {
+			type: String,
+		},
+		activeNavbarBG: {
+			type: String,
+		},
 	},
 	{ timestamps: true },
 );
 
-module.exports = mongoose.model('ecommSetting', ecommSettingSchema);
+module.exports = mongoose.model('EcommSetting', ecommSettingSchema);

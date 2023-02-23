@@ -15,6 +15,7 @@ const ecommSettingRouter = require('./routes/ecomm_setting.routes.js');
 const tagRouter = require('./routes/tag.routes.js');
 const orderRouter = require('./routes/order.routes.js');
 const paymentRouter = require('./routes/payment.routes.js');
+const imageRouter = require('./routes/image.routes.js');
 
 // middlewares / utilities
 const AppError = require('./utils/appError');
@@ -52,6 +53,7 @@ app.use('/api/v1/tags', tagRouter);
 app.use('/api/v1/ecomm_settings', ecommSettingRouter);
 app.use('/api/v1/orders', orderRouter);
 app.use('/api/v1/payments', paymentRouter);
+app.use('/api/v1/images', imageRouter);
 
 app.use((req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

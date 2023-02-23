@@ -1,12 +1,21 @@
-import mongoose from 'mongoose';
-import 'dotenv/config';
-import Item from '../models/item.model.js';
-import Order from '../models/order.model.js';
+/**
+ * to use this run this command
+ * node dev-data/manual_modify_data.js [action]
+ * sample: node dev-data/manual_modify_data.js --emptyImageAllItems
+ */
+
+const mongoose = require('mongoose');
+require('dotenv').config();
+const Item = require('../models/item.model.js');
+const Order = require('../models/order.model.js');
 
 console.log(process.env.MONGODB_URI);
 
 // !this code is to remove a field in document
 // !It will permanently deleted the field in every document
+
+// query to remove a field in this example i remove coverPhoto
+// {}, { $unset: { coverPhoto: '' } }
 
 // * to get the specific model to unset a field
 // if (req.baseUrl.includes('items')) {
@@ -27,6 +36,16 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+const emptyImageAllItems = async () => {
+	try {
+		const res = await Item.updateMany({}, { $unset: { coverPhoto: '' } });
+		console.log(res, 'Succesfully Empty Image All Data!');
+		process.exit();
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 const unPublishedAllItems = async () => {
 	try {
@@ -86,6 +105,10 @@ if (process.argv[2] === '--deleteAllOrders') {
 
 if (process.argv[2] === '--pendingAllOrders') {
 	pendingAllOrders();
+}
+
+if (process.argv[2] === '--emptyImageAllItems') {
+	emptyImageAllItems();
 }
 
 // mongoose

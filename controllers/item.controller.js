@@ -2,10 +2,35 @@ const Item = require('../models/item.model.js');
 const factory = require('../utils/contollersFactory.js');
 const AppError = require('../utils/appError.js');
 
-const index = factory.index(Item);
+const index = factory.index(
+	Item,
+	{
+		path: 'images',
+	},
+	{
+		path: 'coverPhoto',
+	},
+);
 const store = factory.store(Item);
-const show = factory.show(Item);
-const update = factory.update(Item);
+const show = factory.show(
+	Item,
+	{
+		path: 'images',
+	},
+	{
+		path: 'coverPhoto',
+	},
+);
+const update = factory.update(
+	Item,
+	false,
+	{
+		path: 'images',
+	},
+	{
+		path: 'coverPhoto',
+	},
+);
 const destroy = factory.destroy(Item);
 const destroyImage = factory.destroyImage(Item);
 const updateQty = async (req, res, next) => {
