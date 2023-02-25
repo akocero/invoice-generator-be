@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const collectionSchema = new Schema(
+const categorySchema = new Schema(
 	{
 		name: {
 			type: String,
@@ -21,4 +21,4 @@ const collectionSchema = new Schema(
 	{ timestamps: true },
 );
 
-module.exports = mongoose.model('Collection', collectionSchema);
+module.exports = mongoose.model('Category', categorySchema);

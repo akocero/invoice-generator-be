@@ -66,6 +66,12 @@ const itemSchema = new Schema(
 				ref: 'Collection',
 			},
 		],
+		categories: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Category',
+			},
+		],
 		isPublished: {
 			type: Number,
 			default: 0,

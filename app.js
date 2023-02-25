@@ -16,6 +16,7 @@ const tagRouter = require('./routes/tag.routes.js');
 const orderRouter = require('./routes/order.routes.js');
 const paymentRouter = require('./routes/payment.routes.js');
 const imageRouter = require('./routes/image.routes.js');
+const categoryRouter = require('./routes/category.routes.js');
 
 // middlewares / utilities
 const AppError = require('./utils/appError');
@@ -49,6 +50,7 @@ app.use('/api/v1/invoices', invoiceRouter);
 app.use('/api/v1/discounts', discountRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/collections', collectionRouter);
+app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/tags', tagRouter);
 app.use('/api/v1/ecomm_settings', ecommSettingRouter);
 app.use('/api/v1/orders', orderRouter);

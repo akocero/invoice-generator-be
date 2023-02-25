@@ -1,5 +1,6 @@
 const Image = require('../models/image.model.js');
 const EcommSetting = require('../models/ecomm_setting.model.js');
+const Item = require('../models/item.model.js');
 const factory = require('../utils/contollersFactory.js');
 const cloudinary = require('../utils/cloudinary.js');
 const { catchUnknownError } = require('../middlewares/catchUnknownError.js');
@@ -17,10 +18,45 @@ const destroy = catchUnknownError(async (req, res, next) => {
 
 	const ecomSet = await EcommSetting.updateMany(
 		{},
-		{ $pull: { navbarBGs: { $in: [id] } } },
+		{
+			$pull: {
+				navbarBGs: id,
+				heros: id,
+			},
+		},
 	);
 
-	console.log('ecomSet', ecomSet);
+	const item = await Item.updateMany(
+		{},
+		{
+			$pull: {
+				images: id,
+				coverPhoto: id,
+			},
+		},
+	);
+
+	await EcommSetting.updateOne(
+		{
+			activeHero: id,
+		},
+		{
+			$unset: {
+				activeHero: '',
+			},
+		},
+	);
+
+	await EcommSetting.updateOne(
+		{
+			activeNavbarBG: id,
+		},
+		{
+			$unset: {
+				activeNavbarBG: '',
+			},
+		},
+	);
 
 	await cloudinary.uploader.destroy(doc.public_id);
 

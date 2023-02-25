@@ -5,7 +5,7 @@ const {
 	update,
 	show,
 	destroy,
-} = require('../controllers/collection.controller.js');
+} = require('../controllers/category.controller.js');
 const auth = require('../middlewares/auth');
 
 const router = express.Router();
