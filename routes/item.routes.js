@@ -5,7 +5,6 @@ const {
 	update,
 	show,
 	destroy,
-	destroyImage,
 	updateQty,
 } = require('../controllers/item.controller.js');
 const auth = require('../middlewares/auth');
@@ -19,7 +18,6 @@ router.get('/:id', show);
 router.patch('/:id', auth.protect, upload.single('image'), update);
 router.post('/', auth.protect, upload.single('image'), store);
 router.delete('/:id', auth.protect, auth.restrictedTo('admin'), destroy);
-router.post('/deleteImage/:id', auth.protect, destroyImage);
 router.patch('/update_qty/:id', auth.protect, catchUnknownError(updateQty));
 
 module.exports = router;

@@ -20,8 +20,6 @@ class QueryBuilder {
 		if (queryStr !== '{}') {
 			this.filteredData = JSON.parse(queryStr);
 		}
-
-		console.log('parsed', queryStr);
 		// queryStr = '{tags:{"$all":["cheap","blue"]}}'
 		this.query = this.query.find(JSON.parse(queryStr));
 

@@ -23,7 +23,6 @@ const show = factory.show(
 );
 const update = factory.update(
 	Item,
-	false,
 	{
 		path: 'images',
 	},
@@ -32,7 +31,6 @@ const update = factory.update(
 	},
 );
 const destroy = factory.destroy(Item);
-const destroyImage = factory.destroyImage(Item);
 const updateQty = async (req, res, next) => {
 	const { qty } = req.body;
 
@@ -56,6 +54,5 @@ module.exports = {
 	show,
 	destroy,
 	update,
-	destroyImage,
 	updateQty,
 };

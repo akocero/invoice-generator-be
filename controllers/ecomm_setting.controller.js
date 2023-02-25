@@ -24,7 +24,6 @@ const show = factory.show(
 );
 const update = factory.update(
 	EcommSetting,
-	false,
 	{
 		path: 'heros',
 	},
@@ -33,6 +32,5 @@ const update = factory.update(
 	},
 );
 const destroy = factory.destroy(EcommSetting);
-const destroyImage = factory.destroyImage(EcommSetting);
 
-module.exports = { index, store, show, destroy, update, destroyImage };
+module.exports = { index, store, show, destroy, update };

@@ -59,28 +59,12 @@ const index = (Model, ...populateObject) =>
 		res.status(200).json(json);
 	});
 
-const store = (Model, uploadImage = false) =>
+const store = (Model) =>
 	catchUnknownError(async (req, res, next) => {
 		const doc = await Model.create({
 			...req.body,
 		});
 
-		// res.json(req.body);
-
-		if (uploadImage && req.file && doc) {
-			const image_res = await cloudinary.uploader.upload(req.file.path, {
-				upload_preset: 'hxh-api',
-			});
-			doc.image = {
-				public_id: image_res.public_id,
-				secure_url: image_res.secure_url,
-				width: image_res.width,
-				height: image_res.height,
-			};
-			await doc.save();
-		}
-
-		// res.redirect("/docs");
 		res.status(200).json({
 			status: 'success',
 			data: doc,
@@ -90,18 +74,13 @@ const store = (Model, uploadImage = false) =>
 const show = (Model, ...populateObject) =>
 	catchUnknownError(async (req, res, next) => {
 		const id = req.params.id;
-		console.log('populateObject', populateObject);
 		const doc = populateObject
 			? await Model.findById(id).select('-__v').populate(populateObject)
 			: await Model.findById(id).select('-__v');
 
-		// const doc = await Model.findById(id).populate('relatives', 'name');
-
 		if (!doc) {
 			return next(new AppError('No document found with that ID', 404));
 		}
-
-		// res.status(200).json(doc);
 
 		res.status(200).json({
 			status: 'success',
@@ -109,38 +88,18 @@ const show = (Model, ...populateObject) =>
 		});
 	});
 
-const update = (Model, uploadImage = false, ...populateObject) =>
+const update = (Model, ...populateObject) =>
 	catchUnknownError(async (req, res, next) => {
 		const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
 			new: true,
 			runValidators: true,
 		});
+
 		if (!doc) {
 			return next(new AppError('No document found with that ID', 404));
 		}
 
-		if (uploadImage && req.file && doc && doc?.image?.public_id) {
-			console.log(doc.image);
-			await cloudinary.uploader.destroy(doc.image.public_id);
-		}
-
-		if (uploadImage && req.file && doc) {
-			const image_res = await cloudinary.uploader.upload(req.file.path, {
-				upload_preset: 'hxh-api',
-			});
-
-			doc.image = {
-				public_id: image_res.public_id,
-				secure_url: image_res.secure_url,
-				width: image_res.width,
-				height: image_res.height,
-			};
-			await doc.save();
-		}
-
 		const _doc = populateObject ? await doc.populate(populateObject) : doc;
-
-		console.log('populateObject', populateObject);
 
 		res.status(200).json(_doc);
 	});
@@ -154,11 +113,6 @@ const destroy = (Model) =>
 			return next(
 				new AppError(`No document found with this ${id} ID`, 404),
 			);
-		}
-
-		if (doc?.image?.public_id) {
-			console.log(doc.image);
-			await cloudinary.uploader.destroy(doc.image.public_id);
 		}
 
 		res.status(204).json({});
@@ -219,7 +173,6 @@ const destroyImage = (Model) =>
 
 			doc[column_name] = '';
 		}
-		console.log(req.body.image_id);
 		await cloudinary.uploader.destroy(req.body.image_id);
 
 		await doc.save();
