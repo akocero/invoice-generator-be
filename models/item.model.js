@@ -20,6 +20,12 @@ const itemSchema = new Schema(
 			type: Number,
 			required: [true, 'Unit Cost is required'],
 		},
+		salePrice: {
+			type: Number,
+		},
+		actualCost: {
+			type: Number,
+		},
 		quantity: {
 			type: Number,
 			default: 0,
@@ -43,9 +49,7 @@ const itemSchema = new Schema(
 				ref: 'Image',
 			},
 		],
-		salePrice: {
-			type: Number,
-		},
+
 		fileDownloadLink: {
 			type: String,
 		},
@@ -56,10 +60,6 @@ const itemSchema = new Schema(
 				ref: 'Tag',
 			},
 		],
-		// category: {
-		// 	type: mongoose.Schema.Types.ObjectId,
-		// 	ref: 'Category',
-		// },
 		collections: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
