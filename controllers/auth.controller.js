@@ -236,7 +236,7 @@ const updatePassword = async (req, res, next) => {
 	const { newPassword, password, passwordConfirm } = req.body;
 
 	if (!newPassword || !password || !passwordConfirm) {
-		return next(new AppError('Invalid Inputs', 400));
+		return next(new AppError('Invalid Inputs', 401));
 	}
 
 	const user = await User.findById(req.user.id).select('+password');
@@ -244,7 +244,7 @@ const updatePassword = async (req, res, next) => {
 	const correctPassword = await user.comparePassword(password, user.password);
 
 	if (!correctPassword) {
-		return next(new AppError('Your current password is wrong', 400));
+		return next(new AppError('Your current password is wrong', 401));
 	}
 
 	user.password = newPassword;
