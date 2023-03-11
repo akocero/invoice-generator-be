@@ -1,6 +1,6 @@
-const nodemailer = require('nodemailer')
-const hbs = require('nodemailer-express-handlebars')
-const path = require('path')
+const nodemailer = require('nodemailer');
+const hbs = require('nodemailer-express-handlebars');
+const path = require('path');
 
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
@@ -8,7 +8,7 @@ const path = require('path')
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = dirname(__filename);
 
-const viewpath = path.join(__dirname, '../views/')
+const viewpath = path.join(__dirname, '../views/');
 
 // console.log(viewpath);
 // const sendEmail = async (options) => {
@@ -58,14 +58,14 @@ const viewpath = path.join(__dirname, '../views/')
 
 class Email {
 	constructor(user, url) {
-		this.to = user.email
-		this.url = url
-		this.from = `Papier Renei`
+		this.to = user.email;
+		this.url = url;
+		this.from = `Papier Renei`;
 	}
 
 	newTransport() {
-		let transporter
-		console.log(process.env.NODE_ENV)
+		let transporter;
+		console.log(process.env.NODE_ENV);
 		if (process.env.NODE_ENV === 'development') {
 			// Sendgrid
 			transporter = nodemailer.createTransport({
@@ -75,7 +75,7 @@ class Email {
 					user: process.env.MAILTRAP_USERNAME,
 					pass: process.env.MAILTRAP_PASSWORD,
 				},
-			})
+			});
 		} else {
 			transporter = nodemailer.createTransport({
 				host: process.env.EMAIL_HOST,
@@ -83,7 +83,7 @@ class Email {
 					user: process.env.EMAIL_USERNAME,
 					pass: process.env.EMAIL_PASSWORD,
 				},
-			})
+			});
 		}
 
 		const handlebarOptions = {
@@ -94,11 +94,11 @@ class Email {
 			},
 			viewPath: viewpath,
 			extName: '.handlebars',
-		}
+		};
 
-		transporter.use('compile', hbs(handlebarOptions))
+		transporter.use('compile', hbs(handlebarOptions));
 
-		return transporter
+		return transporter;
 	}
 
 	// Send the actual email
@@ -110,43 +110,43 @@ class Email {
 			subject,
 			template,
 			context,
-		}
+		};
 		// 3) Create a transport and send email
-		await this.newTransport().sendMail(mailOptions)
+		await this.newTransport().sendMail(mailOptions);
 	}
 
 	convertToCurrency(value) {
 		return Number(parseFloat(value).toFixed(2)).toLocaleString('en', {
 			minimumFractionDigits: 2,
-		})
+		});
 	}
 
 	convertItemsToCuurency(items) {
 		return items.map((item) => {
-			item.total = this.convertToCurrency(item.total)
-			return item
-		})
+			item.total = this.convertToCurrency(item.total);
+			return item;
+		});
 	}
 
 	async sendFileLink() {
 		await this.send('email', 'Welcome to the Papierenei Family!', {
 			name: 'John Doe',
-		})
+		});
 	}
 
 	async sendOrderDetails(orderDetails) {
-		console.log('orderDetails', orderDetails)
+		console.log('orderDetails', orderDetails);
 
 		const { firstName, items, total, shippingDetails, subtotal } =
-			orderDetails
+			orderDetails;
 
-		await this.send('order', 'Welcome to the Papierenei Family!', {
+		await this.send('order', 'Thank you for your purchase!', {
 			firstName,
 			items: this.convertItemsToCuurency(items),
 			total: this.convertToCurrency(total),
 			subtotal: this.convertToCurrency(subtotal),
 			shippingFee: this.convertToCurrency(shippingDetails.fee),
-		})
+		});
 	}
 
 	async sendPasswordReset() {
@@ -154,8 +154,8 @@ class Email {
 			'password_reset',
 			'Your password reset token (valid for only 10 minutes)',
 			{ url: this.url, name: this.to },
-		)
+		);
 	}
 }
 
-module.exports = Email
+module.exports = Email;
