@@ -89,9 +89,15 @@ const orderSchema = new Schema(
 			type: String,
 			default: 'pending',
 		},
+		orderfulfilledDate: {
+			type: Date,
+		},
 		paymentStatus: {
 			type: String,
 			default: 'pending',
+		},
+		orderPaidDate: {
+			type: Date,
 		},
 		datePaid: {
 			type: Date,
