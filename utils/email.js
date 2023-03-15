@@ -137,11 +137,22 @@ class Email {
 	async sendOrderDetails(orderDetails) {
 		console.log('orderDetails', orderDetails);
 
-		const { firstName, items, total, shippingDetails, subtotal } =
-			orderDetails;
-
-		await this.send('order', 'Thank you for your purchase!', {
+		const {
 			firstName,
+			lastName,
+			email,
+			contactNumber,
+			items,
+			total,
+			shippingDetails,
+			subtotal,
+		} = orderDetails;
+
+		await this.send('order2', 'Thank you for your purchase!', {
+			firstName,
+			fullName: firstName + ' ' + lastName,
+			contactNumber,
+			email,
 			items: this.convertItemsToCuurency(items),
 			total: this.convertToCurrency(total),
 			subtotal: this.convertToCurrency(subtotal),

@@ -1,0 +1,119 @@
+<html>
+	<head>
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+		<title>Papier Renei</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@200;300;400;500;600;700;800&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+	</head>
+
+    {{!-- <style>
+        img {
+            border: none;
+            -ms-interpolation-mode: bicubic;
+            max-width: 100%;
+        }
+
+        body {
+            background-color: #f6f6f6;
+            font-family: sans-serif;
+            -webkit-font-smoothing: antialiased;
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        .email-body {
+            background-image: url('https://res.cloudinary.com/erro/image/upload/v1678859430/Thank_you_for_your_purchase_pvtcsp_fgcogo.png');
+            height: 30rem;
+            background-repeat: no-repeat;
+        }
+
+        .email-container {
+            padding-left: 1rem;
+            padding-top: 2rem;
+        }
+
+        .table {
+            width: 80%;
+        }
+
+    </style> --}}
+	<body style="background-color: #f6f6f6;
+            font-family: 'Quicksand', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;">
+		<div class="wrapper">
+            <div style="text-align: center;">
+                 <img src="https://res.cloudinary.com/erro/image/upload/v1678880169/Thank_you_for_your_purchase_2_3_hna05o.png" alt="">
+            </div>
+            <div class="email-body" style="background-image: url('https://res.cloudinary.com/erro/image/upload/v1678880169/Thank_you_for_your_purchase_2_4_jq8rdm.png');
+                height: 44rem;
+            background-repeat: no-repeat; background-position: center; min-width: 623px;">
+                <div class="email-container" style="padding-left: 1rem; padding-top: 7rem;">
+                    <table style="width: 600px; margin: 0 auto;">
+                        <tbody >
+                            <tr>
+                                <td style="width: 40%; padding-left: 12%;">Name:</td>
+                                <td style="width: 50%;">{{ fullName }}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="width: 40%; padding-left: 12%;">Contact Number:</td>
+                                <td style="width: 50%; ">{{ contactNumber }}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="width: 40%; padding-left: 12%;">Email Address:</td>
+                                <td style="width: 50%;">{{ email }}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%; padding-left: 12%;">Mode of Payment:</td>
+                                <td style="width: 50%;">GCash</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%; padding-left: 12%;">Shipping Fee:</td>
+                                <td style="width: 50%;">₱{{ shippingFee }}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%; padding-left: 12%;">Subtotal:</td>
+                                <td style="width: 50%;">₱{{ subtotal }}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%; padding-left: 12%;">Total:</td>
+                                <td style="width: 50%;">₱{{ total }}</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%; padding-left: 12%;">Summary:</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            {{#each items}}
+                            <tr>
+                                <td style="width: 40%; padding-left: 12%;"><span style="text-transform: capitalize;">{{ this.name }}</span>  x {{ this.qty }}</td>
+                                <td style="width: 50%;">₱{{this.total}}</td>
+                            </tr>
+							{{/each}}								
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <img src="https://res.cloudinary.com/erro/image/upload/v1678880169/Thank_you_for_your_purchase_2_5_vl7ysw.png" alt="">
+            </div>
+        </div>
+	</body>
+</html>
