@@ -78,7 +78,7 @@
                             </tr>
                             <tr>
                                 <td style="width: 40%; padding-left: 12%;">Mode of Payment:</td>
-                                <td style="width: 50%;">GCash</td>
+                                <td style="width: 50%;">{{ paymentMethod }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 40%; padding-left: 12%;">Shipping Fee:</td>
@@ -92,22 +92,23 @@
                                 <td style="width: 40%; padding-left: 12%;">Total:</td>
                                 <td style="width: 50%;">₱{{ total }}</td>
                             </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
+                           							
+                        </tbody>
+                        
+                    </table>
+                    <table style="width: 600px; margin: 0 auto; margin-top: 12px;">
+                        <tbody>
                             <tr>
                                 <td style="width: 40%; padding-left: 12%;">Summary:</td>
                                 <td>&nbsp;</td>
                             </tr>
                             {{#each items}}
                             <tr>
-                                <td style="width: 40%; padding-left: 12%;"><span style="text-transform: capitalize;">{{ this.name }}</span>  x {{ this.qty }}</td>
-                                <td style="width: 50%;">₱{{this.total}}</td>
+                                <td style="width: 70%; padding-left: 12%;"><span style="text-transform: capitalize;">{{ this.name }}</span>  x {{ this.qty }}</td>
+                                <td style="width: 30%;">₱{{this.total}}</td>
                             </tr>
-							{{/each}}								
+							{{/each}}	
                         </tbody>
-                        
                     </table>
                 </div>
             </div>

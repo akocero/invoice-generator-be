@@ -143,6 +143,7 @@ class Email {
 			email,
 			contactNumber,
 			items,
+			paymentMethod,
 			total,
 			shippingDetails,
 			subtotal,
@@ -151,6 +152,7 @@ class Email {
 		await this.send('order2', 'Thank you for your purchase!', {
 			firstName,
 			fullName: firstName + ' ' + lastName,
+			paymentMethod,
 			contactNumber,
 			email,
 			items: this.convertItemsToCuurency(items),

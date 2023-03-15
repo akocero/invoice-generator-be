@@ -96,6 +96,10 @@ const orderSchema = new Schema(
 			type: String,
 			default: 'pending',
 		},
+		paymentMethod: {
+			type: String,
+			required: [true, 'Payment method is required!'],
+		},
 		orderPaidDate: {
 			type: Date,
 		},
