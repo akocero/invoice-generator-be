@@ -17,6 +17,12 @@ const categorySchema = new Schema(
 				ref: 'Image',
 			},
 		],
+		shopBanner: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Image',
+			},
+		],
 	},
 	{ timestamps: true },
 );
