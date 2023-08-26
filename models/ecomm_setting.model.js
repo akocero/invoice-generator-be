@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const ecommSettingSchema = new Schema(
 	{
+		is_maintenance: {
+			type: Boolean,
+			default: false,
+		},
 		banners: [
 			{
 				text: {
