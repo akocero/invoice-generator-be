@@ -24,6 +24,18 @@ const ecommSettingSchema = new Schema(
 				},
 			},
 		],
+		about: {
+			type: String,
+			default: 'DEFAULT_TEXT',
+		},
+		orderTracking: {
+			type: String,
+			default: 'DEFAULT_TEXT',
+		},
+		returnPolicy: {
+			type: String,
+			default: 'DEFAULT_TEXT',
+		},
 		heros: [
 			{
 				type: mongoose.Schema.Types.ObjectId,

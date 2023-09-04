@@ -83,7 +83,7 @@ module.exports = (err, req, res, next) => {
 	err.status = err.status || 'error';
 	let error = { ...err };
 
-	console.log(err.message);
+	console.log(err);
 
 	error.message = err.message;
 	if (err.name === 'CastError') error = handleCastErrorDB(error);

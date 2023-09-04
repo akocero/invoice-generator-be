@@ -5,6 +5,8 @@ const cors = require('cors');
 
 // routes
 const authRouter = require('./routes/auth.routes');
+const guestRouter = require('./routes/guest.routes.js');
+
 const itemRouter = require('./routes/item.routes.js');
 const customerRouter = require('./routes/customer.routes.js');
 const invoiceRouter = require('./routes/invoice.routes.js');
@@ -17,6 +19,7 @@ const orderRouter = require('./routes/order.routes.js');
 const paymentRouter = require('./routes/payment.routes.js');
 const imageRouter = require('./routes/image.routes.js');
 const categoryRouter = require('./routes/category.routes.js');
+const heroRouter = require('./routes/hero.routes.js');
 
 // middlewares / utilities
 const AppError = require('./utils/appError');
@@ -44,6 +47,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/guest/auth', guestRouter);
+
 app.use('/api/v1/customers', customerRouter);
 app.use('/api/v1/items', itemRouter);
 app.use('/api/v1/invoices', invoiceRouter);
@@ -56,6 +61,7 @@ app.use('/api/v1/ecomm_settings', ecommSettingRouter);
 app.use('/api/v1/orders', orderRouter);
 app.use('/api/v1/payments', paymentRouter);
 app.use('/api/v1/images', imageRouter);
+app.use('/api/v1/heros', heroRouter);
 
 app.use((req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

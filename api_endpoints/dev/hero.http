@@ -1,0 +1,36 @@
+@hostname = http://localhost:4000/api/v1
+#@hostname = https://demo-smatera.bellyeah.jp/api/v1
+@endpoint = /heros
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0Y2Y3ZWE2OGMwZTMzNDUzY2EyMjUyNSIsImlhdCI6MTY5MzgwNjE3MCwiZXhwIjoxNjkzODkyNTcwfQ.QAMdXAIW5eA_0jRjlBOUe5ZNdi5ItWQHAgtLHj6UKHA
+
+GET {{hostname}}{{endpoint}}
+content-type: application/json
+Authorization: {{token}}
+###
+
+GET {{hostname}}{{endpoint}}/6411c4dbf8e48cb5b3b1546f
+content-type: application/json
+Authorization: {{token}}
+
+###
+POST {{hostname}}{{endpoint}}
+content-type: application/json
+Authorization: {{token}}
+
+{
+    "title": "Bearly Arts"
+}
+
+###
+PATCH {{hostname}}{{endpoint}}/64f56edd4779cf3aacd762eb
+content-type: application/json
+Authorization: {{token}}
+
+{
+    "buttonText": "View"
+}
+
+###
+DELETE {{hostname}}{{endpoint}}/6401f24b3c3d5cb4e6303ff0
+content-type: application/json
+Authorization: {{token}}

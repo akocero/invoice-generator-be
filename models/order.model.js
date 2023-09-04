@@ -21,6 +21,10 @@ const orderSchema = new Schema(
 			type: String,
 			required: [true, 'Contact Number is required'],
 		},
+		customerID: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Customer',
+		},
 		email: {
 			type: String,
 			required: [true, 'Email is required'],
