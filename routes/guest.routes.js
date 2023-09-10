@@ -9,6 +9,8 @@ const {
 	updateMe,
 	deactivateMe,
 	orders,
+	sendLoginCode,
+	loginByCode,
 } = require('../controllers/guest.controller');
 const guestAuth = require('../middlewares/guest');
 
@@ -31,6 +33,8 @@ router.patch('/resetPassword/:token', catchUnknownError(resetPassword));
 router.post('/forgotPassword', catchUnknownError(forgotPassword));
 router.post('/register', catchUnknownError(register));
 router.post('/login', catchUnknownError(login));
+router.post('/loginEmail', catchUnknownError(sendLoginCode));
+router.post('/loginCode', catchUnknownError(loginByCode));
 
 router.get('/me', guestAuth.protect, me);
 router.get('/orders', guestAuth.protect, orders);

@@ -136,10 +136,29 @@ const orderSchema = new Schema(
 				},
 			},
 		],
+		isDeleted: {
+			type: Boolean,
+			default: false,
+			select: false,
+		},
 	},
 	{ timestamps: true },
 );
 
 orderSchema.plugin(AutoIncrement, { inc_field: 'orderID' });
+
+orderSchema.pre(/^find/, function (next) {
+	// console.log('THIS', this);
+	this.where({
+		$or: [{ isDeleted: false }, { isDeleted: { $exists: false } }],
+	});
+	return next();
+});
+
+orderSchema.methods.softDelete = function () {
+	this.isDeleted = true;
+
+	return this.save({ validateBeforeSave: false });
+};
 
 module.exports = mongoose.model('Order', orderSchema);

@@ -209,10 +209,91 @@ const register = async (req, res, next) => {
 	res.status(201).json({
 		customer: {
 			_id: customer.id,
-			name: customer.name,
+			name: `${customer.firstName} ${customer.lastName}`,
 			email: customer.email,
 		},
 		token,
+	});
+};
+
+const loginByCode = async (req, res, next) => {
+	const { code, codeToken } = req.body;
+
+	if (!code || !codeToken) {
+		return next(new AppError('Invalid Inputs!', 400));
+	}
+
+	const hashedCodeToken = crypto
+		.createHash('sha256')
+		.update(codeToken)
+		.digest('hex');
+
+	const customer = await Customer.findOne({
+		loginCodeToken: hashedCodeToken,
+		loginCodeExpires: { $gt: Date.now() },
+		loginCode: code,
+	});
+
+	if (!customer) {
+		return next(
+			new AppError(
+				'The code is expired or wrong please re-enter your email again!',
+				400,
+			),
+		);
+	}
+
+	customer.loginCodeToken = undefined;
+	customer.loginCodeExpires = undefined;
+	customer.loginCode = undefined;
+
+	await customer.save({ validateBeforeSave: false });
+
+	const token = createAndSendToken(customer, req, res);
+
+	res.json({
+		customer: {
+			_id: customer.id,
+			name: `${customer.firstName} ${customer.lastName}`,
+			firstName: customer.firstName,
+			lastName: customer.lastName,
+			email: customer.email,
+		},
+		token,
+	});
+};
+
+const sendLoginCode = async (req, res, next) => {
+	const { email } = req.body;
+
+	if (!email) {
+		return next(new AppError('Invalid inputs', 400));
+	}
+
+	const customer = await Customer.findOne({ email });
+
+	if (!customer) {
+		return next(new AppError('Email not found.', 401));
+	}
+
+	const { codeToken, randomCode } = customer.createLoginToken();
+
+	await customer.save({ validateBeforeSave: false });
+
+	try {
+		await new Email({ email }, 0).sendLoginCode(randomCode);
+	} catch (error) {
+		console.log(error);
+		return next(
+			new AppError(
+				'There was an error sending the email, Please try again later!',
+				500,
+			),
+		);
+	}
+
+	res.json({
+		codeToken,
 	});
 };
 
@@ -236,7 +317,7 @@ const login = async (req, res, next) => {
 
 	// remove email sending when login
 	// try {
-	// 	await new Email({ email }, 0).sendFileLink();
+	// 	await new Email({ email }, 0).sendLoginCode();
 	// } catch (error) {
 	// 	console.log(error);
 	// 	return next(
@@ -250,7 +331,7 @@ const login = async (req, res, next) => {
 	res.json({
 		customer: {
 			_id: customer.id,
-			name: customer.name,
+			name: `${customer.firstName} ${customer.lastName}`,
 			email: customer.email,
 		},
 		token,
@@ -316,4 +397,6 @@ module.exports = {
 	updateMe,
 	deactivateMe,
 	orders,
+	sendLoginCode,
+	loginByCode,
 };

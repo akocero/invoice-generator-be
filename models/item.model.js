@@ -76,8 +76,27 @@ const itemSchema = new Schema(
 			type: Number,
 			default: 0,
 		},
+		isDeleted: {
+			type: Boolean,
+			default: false,
+			select: false,
+		},
 	},
 	{ timestamps: true },
 );
+
+itemSchema.pre(/^find/, function (next) {
+	// console.log('THIS', this);
+	this.where({
+		$or: [{ isDeleted: false }, { isDeleted: { $exists: false } }],
+	});
+	return next();
+});
+
+itemSchema.methods.softDelete = function () {
+	this.isDeleted = true;
+
+	return this.save({ validateBeforeSave: false });
+};
 
 module.exports = mongoose.model('item', itemSchema);

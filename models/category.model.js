@@ -23,8 +23,27 @@ const categorySchema = new Schema(
 				ref: 'Image',
 			},
 		],
+		isDeleted: {
+			type: Boolean,
+			default: false,
+			select: false,
+		},
 	},
 	{ timestamps: true },
 );
+
+categorySchema.pre(/^find/, function (next) {
+	// console.log('THIS', this);
+	this.where({
+		$or: [{ isDeleted: false }, { isDeleted: { $exists: false } }],
+	});
+	return next();
+});
+
+categorySchema.methods.softDelete = function () {
+	this.isDeleted = true;
+
+	return this.save({ validateBeforeSave: false });
+};
 
 module.exports = mongoose.model('Category', categorySchema);

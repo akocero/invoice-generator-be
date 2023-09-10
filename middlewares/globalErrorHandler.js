@@ -25,16 +25,18 @@ const handleValidationErrorDB = (err) => {
 };
 
 const dispatchDevelopmentError = (err, req, res) => {
-	// return res.status(err.statusCode).json({
-	// 	status: err.status,
-	// 	errors: err.errors,
-	// 	message: err.message,
-	// 	stack: err.stack,
-	// });
-	if (err.errors) {
+	if (err.isOperational && err.errors) {
 		return res.status(err.statusCode).json({
 			status: err.status,
 			errors: err.errors,
+			message: err.message,
+			stack: err.stack,
+		});
+	}
+
+	if (err.isOperational) {
+		return res.status(err.statusCode).json({
+			status: err.status,
 			message: err.message,
 			stack: err.stack,
 		});

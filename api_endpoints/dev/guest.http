@@ -1,23 +1,37 @@
 @hostname = http://localhost:4000/api/v1
 #@hostname = https://demo-smatera.bellyeah.jp/api/v1
-# @hostname = https://hxh-api.cyclic.cloud/api/v1
+# @hostname = https://pr-api.onrender.com/api/v1
 
 @endpoint = /guest/auth
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZjU5ZGIwNGUzODE3N2FiMzcxNzI3MyIsImlhdCI6MTY5MzgxODQ2OCwiZXhwIjoxNjk2NDEwNDY4fQ.tsaY_6VRV8kCgVW7aPiQ3t_GZXWcjH1Wr-U0T-5Tpk8
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZjU5ZGIwNGUzODE3N2FiMzcxNzI3MyIsImlhdCI6MTY5NDIzNjE5NiwiZXhwIjoxNjk2ODI4MTk2fQ.2rP4L-DTJpebSJTl433Qg0RxQEHqqJc8RriijcelW6E
 
 ### LOGIN USER
 POST {{hostname}}{{endpoint}}/login
 content-type: application/json
 Authorization: {{token}}
 
-# {
-# 	"email": "dev@gmail.com",
-# 	"password": "password"
-# }
+{
+	"email": "pyduvyny@mailinator.com",
+	"password": "password"
+}
+
+### VERIFY EMAIL AND SEND CODE
+POST {{hostname}}{{endpoint}}/loginEmail
+content-type: application/json
+Authorization: {{token}}
 
 {
-	"email": "ez2@mil.com",
-	"password": "password"
+	"email": "pyduvyny@mailinator.com"
+}
+
+### LOGIN USING CODE
+POST {{hostname}}{{endpoint}}/loginCode
+content-type: application/json
+Authorization: {{token}}
+
+{
+	"code": "990857",
+	"codeToken": "8dbcf9910ba783679d4d68089046b3d71be9c821399b88ea65b43290b6c56122"
 }
 
 ### GET SELF

@@ -66,14 +66,36 @@ const customerSchema = new Schema(
 		passwordChangedAt: Date,
 		passwordResetToken: String,
 		passwordResetExpires: Date,
+		loginCodeToken: String,
+		loginCodeExpires: Date,
+		loginCode: String,
 		active: {
 			type: Boolean,
 			default: true,
 			select: false,
 		},
+		isDeleted: {
+			type: Boolean,
+			default: false,
+			select: false,
+		},
 	},
 	{ timestamps: true },
 );
+
+customerSchema.pre(/^find/, function (next) {
+	// console.log('THIS', this);
+	this.where({
+		$or: [{ isDeleted: false }, { isDeleted: { $exists: false } }],
+	});
+	return next();
+});
+
+customerSchema.methods.softDelete = function () {
+	this.isDeleted = true;
+
+	return this.save({ validateBeforeSave: false });
+};
 
 customerSchema.pre('save', async function (next) {
 	// Only run this function if password was actually modified
@@ -101,10 +123,28 @@ customerSchema.methods.createPasswordResetToken = function () {
 		.createHash('sha256')
 		.update(resetToken)
 		.digest('hex');
-
+	// Date now + 10 minues * 60 seconds * 1000 miliseconds
 	this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
 	return resetToken;
+};
+
+customerSchema.methods.createLoginToken = function () {
+	const codeToken = crypto.randomBytes(32).toString('hex');
+
+	this.loginCodeToken = crypto
+		.createHash('sha256')
+		.update(codeToken)
+		.digest('hex');
+	// Date now + 15 minues * 60 seconds * 1000 miliseconds
+	this.loginCodeExpires = Date.now() + 15 * 60 * 1000;
+	const min = 100000;
+	const max = 999999;
+	const randomCode = Math.floor(Math.random() * (max - min + 1)) + min;
+
+	this.loginCode = randomCode;
+
+	return { codeToken, randomCode };
 };
 
 customerSchema.methods.changedPasswordAfter = function (JWTTimestamp) {

@@ -1,6 +1,6 @@
 @hostname = http://localhost:4000/api/v1
 #@hostname = https://demo-smatera.bellyeah.jp/api/v1
-@endpoint = /collections
+@endpoint = /customers
 @token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyY2QyOGNlOWQ4ODE3NWY5OTg2MTVlZCIsImlhdCI6MTY5NDIzNjMyMCwiZXhwIjoxNjk0MzIyNzIwfQ.uDXyCNn3j_-77rcPWSxd5Y7vPKULk870l9vi-ct1pgs
 
 GET {{hostname}}{{endpoint}}
@@ -37,6 +37,6 @@ Authorization: {{token}}
 }
 
 ###
-DELETE {{hostname}}{{endpoint}}/6411c4dbf8e48cb5b3b1546f
+DELETE {{hostname}}{{endpoint}}/64f59db04e38177ab3717273
 content-type: application/json
 Authorization: {{token}}

@@ -107,13 +107,15 @@ const update = (Model, ...populateObject) =>
 const destroy = (Model) =>
 	catchUnknownError(async (req, res, next) => {
 		const id = req.params.id;
-		const doc = await Model.findByIdAndDelete(id);
+		const doc = await Model.findOne({ _id: id });
 
 		if (!doc) {
 			return next(
 				new AppError(`No document found with this ${id} ID`, 404),
 			);
 		}
+
+		await doc.softDelete();
 
 		res.status(204).json({});
 	});

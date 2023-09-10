@@ -16,8 +16,27 @@ const discountSchema = new Schema(
 			type: Number,
 			required: [true, 'Value is required'],
 		},
+		isDeleted: {
+			type: Boolean,
+			default: false,
+			select: false,
+		},
 	},
 	{ timestamps: true },
 );
+
+discountSchema.pre(/^find/, function (next) {
+	// console.log('THIS', this);
+	this.where({
+		$or: [{ isDeleted: false }, { isDeleted: { $exists: false } }],
+	});
+	return next();
+});
+
+discountSchema.methods.softDelete = function () {
+	this.isDeleted = true;
+
+	return this.save({ validateBeforeSave: false });
+};
 
 module.exports = mongoose.model('discount', discountSchema);

@@ -9,6 +9,7 @@ require('dotenv').config();
 const Item = require('../models/item.model.js');
 const Order = require('../models/order.model.js');
 const Image = require('../models/image.model.js');
+const Customer = require('../models/customer.model.js');
 
 console.log(process.env.MONGODB_URI);
 
@@ -62,6 +63,17 @@ const pendingAllOrders = async () => {
 	try {
 		await Order.updateMany({}, { $set: { status: 'pending' } });
 		console.log('Succesfully Pending All Orders!');
+		process.exit();
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const setIsDeletedField = async () => {
+	console.log('publishedAllItems Invoked');
+	try {
+		await Customer.updateMany({}, { $set: { isDeleted: false } });
+		console.log('Succesfully added is deleted feild in All Data!');
 		process.exit();
 	} catch (error) {
 		console.log(error);
@@ -140,6 +152,12 @@ const actions = [
 		name: 'deleteAllImageData',
 		func: () => {
 			deleteAllImageData();
+		},
+	},
+	{
+		name: 'setIsDeletedField',
+		func: () => {
+			setIsDeletedField();
 		},
 	},
 ];
