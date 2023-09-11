@@ -163,10 +163,14 @@ class Email {
 	}
 
 	async sendLoginCode(code) {
-		await this.send('login_code', 'This code (valid for only 10 minutes)', {
-			code,
-			name: this.to,
-		});
+		await this.send(
+			'login_code',
+			'This code is valid for only 15 minutes',
+			{
+				code,
+				name: this.to,
+			},
+		);
 	}
 
 	async sendPasswordReset() {

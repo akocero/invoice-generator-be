@@ -11,6 +11,15 @@ const index = factory.index(
 	{
 		path: 'navbarBGs',
 	},
+	{
+		path: 'logoSm',
+	},
+	{
+		path: 'logoFlat',
+	},
+	{
+		path: 'logoBase',
+	},
 );
 const store = factory.store(EcommSetting);
 const show = factory.show(
@@ -21,6 +30,15 @@ const show = factory.show(
 	{
 		path: 'navbarBGs',
 	},
+	{
+		path: 'logoSm',
+	},
+	{
+		path: 'logoFlat',
+	},
+	{
+		path: 'logoBase',
+	},
 );
 const update = factory.update(
 	EcommSetting,
@@ -29,6 +47,15 @@ const update = factory.update(
 	},
 	{
 		path: 'navbarBGs',
+	},
+	{
+		path: 'logoSm',
+	},
+	{
+		path: 'logoFlat',
+	},
+	{
+		path: 'logoBase',
 	},
 );
 const destroy = factory.destroy(EcommSetting);

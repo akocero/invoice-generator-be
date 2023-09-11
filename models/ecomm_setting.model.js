@@ -48,6 +48,26 @@ const ecommSettingSchema = new Schema(
 				ref: 'Image',
 			},
 		],
+
+		logoSm: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Image',
+			},
+		],
+		logoFlat: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Image',
+			},
+		],
+		logoBase: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Image',
+			},
+		],
+
 		activeHero: {
 			type: String,
 		},

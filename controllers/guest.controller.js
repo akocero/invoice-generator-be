@@ -106,6 +106,10 @@ const updateMe = async (req, res, next) => {
 		'lastName',
 		'mobileNumber',
 		'email',
+		'city',
+		'streetAddress',
+		'state',
+		'zipCode',
 	);
 	// if (req.file) filteredBody.photo = req.file.filename; for photos
 
@@ -252,13 +256,7 @@ const loginByCode = async (req, res, next) => {
 	const token = createAndSendToken(customer, req, res);
 
 	res.json({
-		customer: {
-			_id: customer.id,
-			name: `${customer.firstName} ${customer.lastName}`,
-			firstName: customer.firstName,
-			lastName: customer.lastName,
-			email: customer.email,
-		},
+		customer,
 		token,
 	});
 };
