@@ -1,7 +1,7 @@
 /**
  * to use this run this command
  * node dev-data/manual_modify_data.js [action]
- * sample: node dev-data/manual_modify_data.js --emptyImageAllItems
+ * sample: node dev-data/manual_modify_data.js --deleteAllOrders
  */
 
 const mongoose = require('mongoose');
@@ -20,7 +20,7 @@ console.log(process.env.MONGODB_URI);
 // {}, { $unset: { coverPhoto: '' } }
 
 // * to get the specific model to unset a field
-// if (req.baseUrl.includes('items')) {
+// if (req.baseUrl.includes('items'	)) {
 // * this scripts is to unset or removed the field
 // * in this example, I removed the categories field
 // console.log(await Model.updateMany([{ $unset: 'categories' }]));

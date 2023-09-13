@@ -52,6 +52,7 @@ const customerSchema = new Schema(
 			required: [true, 'Please add a password'],
 			select: false,
 		},
+		wishList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'item' }],
 		passwordConfirm: {
 			type: String,
 			required: [true, 'Please confirm your password'],

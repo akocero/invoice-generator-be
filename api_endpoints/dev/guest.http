@@ -3,7 +3,7 @@
 # @hostname = https://pr-api.onrender.com/api/v1
 
 @endpoint = /guest/auth
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZjU5ZGIwNGUzODE3N2FiMzcxNzI3MyIsImlhdCI6MTY5NDIzNjE5NiwiZXhwIjoxNjk2ODI4MTk2fQ.2rP4L-DTJpebSJTl433Qg0RxQEHqqJc8RriijcelW6E
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0Zjg3YmFiZGY5NzFmZGYxZWQ4NDNiOCIsImlhdCI6MTY5NDQ5NzUxNSwiZXhwIjoxNjk3MDg5NTE1fQ.qLj84m8K81nqT82W0nDUeAfZIfuh7J64bHWHHPr2Tzc
 
 ### LOGIN USER
 POST {{hostname}}{{endpoint}}/login
@@ -98,4 +98,20 @@ Authorization: {{token}}
 
 ### GET ORDERS
 GET {{hostname}}{{endpoint}}/orders
+Authorization: {{token}}
+
+### GET WISHLIST
+GET {{hostname}}{{endpoint}}/wishlist
+Authorization: {{token}}
+
+### UPDATE WISHLIST
+PATCH {{hostname}}{{endpoint}}/update/wishlist
+content-type: application/json
+Authorization: {{token}}
+
+{ "wishList": "62cd28e49d88175f998615f5" }
+
+### UPDATE WISHLIST
+DELETE {{hostname}}{{endpoint}}/delete/wishlist/62cd28e49d88175f998615f5
+content-type: application/json
 Authorization: {{token}}

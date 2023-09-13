@@ -236,7 +236,14 @@ const loginByCode = async (req, res, next) => {
 		loginCodeToken: hashedCodeToken,
 		loginCodeExpires: { $gt: Date.now() },
 		loginCode: code,
+	}).populate({
+		path: 'wishList',
+		populate: {
+			path: 'coverPhoto',
+		},
 	});
+
+	// .populate('wishList');
 
 	if (!customer) {
 		return next(
@@ -375,13 +382,87 @@ const updatePassword = async (req, res, next) => {
 };
 
 const orders = async (req, res, next) => {
-	const data = await Order.find({
-		$or: [{ email: req.customer.email }, { customerID: req.customer._id }],
+	const ordersByEmail = await Order.find({
+		$and: [
+			{ customerID: { $exists: false } },
+			{ email: req.customer.email },
+		],
 	});
+
+	console.log(req.customer._id);
+
+	const ordersByCustomerID = await Order.find({
+		$and: [
+			{ customerID: { $exists: true } },
+			{ customerID: req.customer._id },
+		],
+	});
+
+	const data = ordersByEmail.concat(ordersByCustomerID);
 
 	res.status(200).json({
 		status: 'success',
 		data: data,
+	});
+};
+
+const orderDetails = async (req, res, next) => {
+	const id = req.params.id;
+	const doc = await Order.findOne({
+		$and: [{ _id: id }, { email: req.customer.email }],
+	});
+
+	if (!doc) {
+		return next(new AppError('No document found with that ID', 404));
+	}
+
+	res.status(200).json({
+		status: 'success',
+		data: doc,
+	});
+};
+
+const updateWishList = async (req, res, next) => {
+	const { wishList } = req.body;
+	const customer = await Customer.updateOne(
+		{ _id: req.customer._id },
+		{ $addToSet: { wishList: wishList } },
+	);
+
+	// await customer.save({ validateBeforeSave: false });
+
+	res.status(200).json({
+		status: 'success',
+		data: customer,
+	});
+};
+
+const getWishList = async (req, res, next) => {
+	const customer = await Customer.findById(req.customer._id).populate({
+		path: 'wishList',
+		populate: {
+			path: 'coverPhoto',
+		},
+	});
+
+	res.status(200).json({
+		status: 'success',
+		data: customer.wishList,
+	});
+};
+
+const removetWishList = async (req, res, next) => {
+	const wishList = req.params.id;
+	const customer = await Customer.updateOne(
+		{ _id: req.customer._id },
+		{ $pull: { wishList: wishList } },
+	);
+
+	// await customer.save({ validateBeforeSave: false });
+
+	res.status(200).json({
+		status: 'success',
+		data: customer,
 	});
 };
 
@@ -397,4 +478,8 @@ module.exports = {
 	orders,
 	sendLoginCode,
 	loginByCode,
+	orderDetails,
+	getWishList,
+	updateWishList,
+	removetWishList,
 };

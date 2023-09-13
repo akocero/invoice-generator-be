@@ -11,6 +11,10 @@ const {
 	orders,
 	sendLoginCode,
 	loginByCode,
+	orderDetails,
+	getWishList,
+	updateWishList,
+	removetWishList,
 } = require('../controllers/guest.controller');
 const guestAuth = require('../middlewares/guest');
 
@@ -37,6 +41,18 @@ router.post('/loginEmail', catchUnknownError(sendLoginCode));
 router.post('/loginCode', catchUnknownError(loginByCode));
 
 router.get('/me', guestAuth.protect, me);
-router.get('/orders', guestAuth.protect, orders);
+router.get('/orders', guestAuth.protect, catchUnknownError(orders));
+router.get('/orders/:id', guestAuth.protect, catchUnknownError(orderDetails));
+router.patch(
+	'/update/wishlist',
+	guestAuth.protect,
+	catchUnknownError(updateWishList),
+);
+router.get('/wishlist', guestAuth.protect, catchUnknownError(getWishList));
+router.delete(
+	'/delete/wishlist/:id',
+	guestAuth.protect,
+	catchUnknownError(removetWishList),
+);
 
 module.exports = router;
