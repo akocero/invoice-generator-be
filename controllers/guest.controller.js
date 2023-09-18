@@ -110,6 +110,8 @@ const updateMe = async (req, res, next) => {
 		'streetAddress',
 		'state',
 		'zipCode',
+		'barangay',
+		'province',
 	);
 	// if (req.file) filteredBody.photo = req.file.filename; for photos
 
@@ -169,23 +171,9 @@ const resetPassword = async (req, res, next) => {
 };
 
 const register = async (req, res, next) => {
-	const {
-		firstName,
-		lastName,
-		mobileNumber,
-		email,
-		password,
-		passwordConfirm,
-	} = req.body;
+	const { firstName, lastName, mobileNumber, email } = req.body;
 
-	if (
-		!firstName ||
-		!lastName ||
-		!email ||
-		!password ||
-		!passwordConfirm ||
-		!mobileNumber
-	) {
+	if (!firstName || !lastName || !email || !mobileNumber) {
 		return next(new AppError('Invalid inputs', 400));
 	}
 
@@ -200,8 +188,6 @@ const register = async (req, res, next) => {
 		lastName,
 		mobileNumber,
 		email,
-		password,
-		passwordConfirm,
 	});
 
 	if (!customer) {
@@ -211,11 +197,7 @@ const register = async (req, res, next) => {
 	const token = createAndSendToken(customer, req, res);
 
 	res.status(201).json({
-		customer: {
-			_id: customer.id,
-			name: `${customer.firstName} ${customer.lastName}`,
-			email: customer.email,
-		},
+		customer,
 		token,
 	});
 };

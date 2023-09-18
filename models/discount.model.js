@@ -16,6 +16,10 @@ const discountSchema = new Schema(
 			type: Number,
 			required: [true, 'Value is required'],
 		},
+		isPublished: {
+			type: Number,
+			default: 0,
+		},
 		isDeleted: {
 			type: Boolean,
 			default: false,

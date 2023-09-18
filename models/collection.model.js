@@ -7,6 +7,7 @@ const collectionSchema = new Schema(
 			type: String,
 			required: [true, 'Name is required'],
 			unique: [true, 'Name already exist'],
+			lowercase: true,
 		},
 		description: {
 			type: String,

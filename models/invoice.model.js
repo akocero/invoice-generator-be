@@ -20,6 +20,8 @@ const invoiceSchema = new Schema(
 			streetAddress: String,
 			city: String,
 			state: String,
+			barangay: String,
+			province: String,
 			zipCode: String,
 		},
 		payableTo: {

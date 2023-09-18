@@ -34,6 +34,12 @@ const customerSchema = new Schema(
 		city: {
 			type: String,
 		},
+		province: {
+			type: String,
+		},
+		barangay: {
+			type: String,
+		},
 		state: {
 			type: String,
 		},
@@ -49,20 +55,13 @@ const customerSchema = new Schema(
 		},
 		password: {
 			type: String,
-			required: [true, 'Please add a password'],
+			required: [false, 'Please add a password'],
 			select: false,
 		},
 		wishList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'item' }],
 		passwordConfirm: {
 			type: String,
-			required: [true, 'Please confirm your password'],
-			validate: {
-				// This only works on CREATE and SAVE!!!
-				validator: function (el) {
-					return el === this.password;
-				},
-				message: 'Passwords are not the same!',
-			},
+			required: [false, 'Please confirm your password'],
 		},
 		passwordChangedAt: Date,
 		passwordResetToken: String,

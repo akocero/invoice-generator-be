@@ -31,7 +31,6 @@ const orderSchema = new Schema(
 		},
 		country: {
 			type: String,
-			required: [true, 'Country is Required'],
 		},
 		streetAddress: {
 			type: String,
@@ -43,7 +42,12 @@ const orderSchema = new Schema(
 		},
 		state: {
 			type: String,
-			required: [true, 'State is Required'],
+		},
+		barangay: {
+			type: String,
+		},
+		province: {
+			type: String,
 		},
 		zipCode: {
 			type: String,
@@ -85,9 +89,20 @@ const orderSchema = new Schema(
 			fee: {
 				type: Number,
 			},
+			place: {
+				type: String,
+			},
 		},
 		discount: {
-			type: String,
+			code: {
+				type: String,
+			},
+			discountKind: {
+				type: String,
+			},
+			discountValue: {
+				type: String,
+			},
 		},
 		status: {
 			type: String,
