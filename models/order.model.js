@@ -88,6 +88,13 @@ const orderSchema = new Schema(
 		shippingDetails: {
 			fee: {
 				type: Number,
+				required: [
+					function () {
+						// Require 'special_feature' only when 'product_type' is 'special'
+						return this.productType === 'physical';
+					},
+					'Shipping is required',
+				],
 			},
 			place: {
 				type: String,
@@ -124,6 +131,10 @@ const orderSchema = new Schema(
 		},
 		datePaid: {
 			type: Date,
+		},
+		productType: {
+			type: String,
+			default: 'physical',
 		},
 		notes: {
 			type: String,

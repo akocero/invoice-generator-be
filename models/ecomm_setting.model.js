@@ -36,6 +36,10 @@ const ecommSettingSchema = new Schema(
 			type: String,
 			default: 'DEFAULT_TEXT',
 		},
+		servicesTerms: {
+			type: String,
+			default: 'DEFAULT_TEXT',
+		},
 		faq: {
 			type: String,
 			default: 'DEFAULT_TEXT',

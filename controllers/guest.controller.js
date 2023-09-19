@@ -57,10 +57,7 @@ const forgotPassword = async (req, res, next) => {
 	const resetURL = `${req.headers.origin}/auth/reset_password/${resetToken}`;
 
 	try {
-		await new Email(
-			{ email: customer.email },
-			resetURL,
-		).sendPasswordReset();
+		await new Email({ email: customer.email }).sendPasswordReset(resetURL);
 
 		res.status(200).json({
 			status: 'success',
@@ -268,7 +265,7 @@ const sendLoginCode = async (req, res, next) => {
 	await customer.save({ validateBeforeSave: false });
 
 	try {
-		await new Email({ email }, 0).sendLoginCode(randomCode);
+		await new Email({ email }).sendLoginCode(randomCode);
 	} catch (error) {
 		console.log(error);
 		return next(

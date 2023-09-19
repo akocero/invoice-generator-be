@@ -31,7 +31,7 @@ Authorization: {{token}}
 
 {
 	"code": "990857",
-	"codeToken": "8dbcf9910ba783679d4d68089046b3d71be9c821399b88ea65b43290b6c56122"
+	"codeToken": "e002360668accc10979394788898d717ddad4e5881911f7cb65ef19a6b0f22bc"
 }
 
 ### GET SELF
