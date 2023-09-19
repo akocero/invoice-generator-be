@@ -55,12 +55,13 @@ class Email {
 	async send(template, subject, context = {}) {
 		// 2) Define email options
 		const mailOptions = {
-			from: this.from,
+			from: 'Papier Renei <papierenei@gmail.com>',
 			to: this.to,
 			subject,
 			template,
 			context,
 		};
+
 		// 3) Create a transport and send email
 		await this.newTransport().sendMail(mailOptions);
 	}
