@@ -10,6 +10,10 @@ const itemSchema = new Schema(
 			trim: true,
 			lowercase: true,
 		},
+		productType: {
+			type: String,
+			default: 'physical',
+		},
 		description: {
 			type: String,
 		},

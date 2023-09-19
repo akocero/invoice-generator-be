@@ -110,6 +110,9 @@ const orderSchema = new Schema(
 			discountValue: {
 				type: String,
 			},
+			discountTotal: {
+				type: Number,
+			},
 		},
 		status: {
 			type: String,
@@ -132,11 +135,10 @@ const orderSchema = new Schema(
 		datePaid: {
 			type: Date,
 		},
-		productType: {
-			type: String,
-			default: 'physical',
-		},
 		notes: {
+			type: String,
+		},
+		trackingNumber: {
 			type: String,
 		},
 		payments: [
