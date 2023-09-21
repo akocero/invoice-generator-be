@@ -16,11 +16,23 @@ const store = catchUnknownError(async (req, res, next) => {
 
 	const doc = await Order.findById(created._id).select('-__v').lean();
 
-	try {
-		// await new Email({ email: doc.email }).sendOrderDetails(doc);
-		await new Email({ email: doc.email }).sendOrderPlaced(doc);
-	} catch (error) {
-		console.log(error);
+	// await new Email({ email: doc.email }).sendOrderDetails(doc);
+	const isSent = await new Email({ email: doc.email }).sendOrderPlaced(doc);
+
+	if (!isSent) {
+		return next(
+			new AppError(
+				'There was an error sending the email, Please try again later!',
+				500,
+			),
+		);
+	}
+
+	const isOwnerEmailSent = await new Email({
+		email: process.env.EMAIL_USERNAME,
+	}).sendOwnerOrderNotif();
+
+	if (!isOwnerEmailSent) {
 		return next(
 			new AppError(
 				'There was an error sending the email, Please try again later!',
@@ -52,16 +64,27 @@ const update = catchUnknownError(async (req, res, next) => {
 		runValidators: true,
 	});
 
+	if (!doc) {
+		return next(new AppError('No document found with that ID', 404));
+	}
+
 	if (doc.paymentStatus === 'paid') {
-		console.log('Send Paid Email');
+		const isPaidEmailSent = await new Email({
+			email: doc.email,
+		}).sendOrderPlaced(doc);
+
+		if (!isPaidEmailSent) {
+			return next(
+				new AppError(
+					'There was an error sending the email, Please try again later!',
+					500,
+				),
+			);
+		}
 	}
 
 	if (doc.status === 'fulfilled') {
 		console.log('Send order delivered');
-	}
-
-	if (!doc) {
-		return next(new AppError('No document found with that ID', 404));
 	}
 
 	res.status(200).json(doc);
