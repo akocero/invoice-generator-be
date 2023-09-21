@@ -18,7 +18,7 @@
       }
 
       body {
-        background-color: #f6f6f6;
+        background-color: #F1F6F6;
         font-family: sans-serif;
         -webkit-font-smoothing: antialiased;
         font-size: 14px;
@@ -332,11 +332,59 @@
 
     </style>
   </head>
-  <body>
-    <p>Hi there, {{name}} </p>
-    <p>Your 6-digit code is:</p>
-    <p>{{code}}</p>
+  <body style="background-color: #f6f6f6; padding: 4px 0;"> 
+    <div style="width: 60%;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 42px;">
 
-    <p>This code can only be used once. It expires in 15 minutes.</p>
+    <div style="text-align: center;">
+      <img src="https://res.cloudinary.com/erro/image/upload/v1695286787/Email_Logo_Flat_d3pkdv.png" alt="" style="width: 380px;">
+    </div>
+    
+    <h2 style="text-align: center;">Thank you for your order!</h2>
+    <p style="text-transform: capitalize;">Hello, {{fullName}}</p>
+    <p>Your order #{{orderID}} has been placed and confirmed on {{createdAt}}. </p>
+    <p>For bank transactions, kindly deposit through the account or QR code below:</p>
+
+    <p style="text-align: center;">
+      BPI Family Savings <br />
+      Reneilda de Leon <br />
+      2289 3651 87
+    </p>
+
+    <div style="text-align: center;">
+      <img src="https://res.cloudinary.com/erro/image/upload/v1695179406/papierenei-bpi_x8ibjz.jpg" alt="" style="width: 400px;">
+    </div>
+    
+
+    <p>For GCash, please send the payment to this account:</p>
+    
+    <p style="text-align: center;">
+        Reneilda D. <br />
+        0926 615 1516
+    </p>
+
+    <div style="text-align: center;">
+      <img src="https://res.cloudinary.com/erro/image/upload/v1695179406/papierenei-gcash_ghhh4s.jpg" alt="" style="width: 305px;">
+    </div>
+    
+    <p>Afterwards, kindly let us know via Messenger, Instagram private message, or email when you have sent the payment for us to verify.</p>
+    <p>We will ship out your order once we have verified your payment (within 1-2 business days).</p>
+    <p>For more details, you may check it out on your Papier Renei account. Thank you!</p>
+
+    <ul>
+      {{#each items}}
+      <li>{{ this.name }} x {{ this.qty }} - ₱{{this.total}}</li>
+      {{/each}}
+    </ul>
+
+    <ul>
+      <li>Subtotal: ₱{{ subtotal }}</li>
+      <li>Shipping Fee: ₱{{ shippingFee }}</li>
+      <li>Discount: ₱{{ discountTotal }}</li>
+      <li>Total: ₱{{ total }}</li>
+    </ul>
+    </div>
   </body>
 </html>

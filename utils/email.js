@@ -5,6 +5,7 @@ const {
 	convertToCurrency,
 	objectFieldToCurrency,
 } = require('./currencyHelper');
+const moment = require('moment');
 
 const viewpath = path.join(__dirname, '../views/');
 class Email {
@@ -105,6 +106,40 @@ class Email {
 			total: convertToCurrency(total),
 			subtotal: convertToCurrency(subtotal),
 			shippingFee: convertToCurrency(shippingDetails.fee),
+		});
+	}
+
+	async sendOrderPlaced(orderDetails) {
+		const {
+			firstName,
+			lastName,
+			email,
+			contactNumber,
+			items,
+			_id,
+			total,
+			shippingDetails,
+			discount,
+			subtotal,
+			createdAt,
+		} = orderDetails;
+		console.log('converted items: ', objectFieldToCurrency(items, 'total'));
+		await this.send('order_place', 'Thank you for your purchase!', {
+			firstName,
+			fullName: firstName + ' ' + lastName,
+			orderID: _id,
+			contactNumber,
+			createdAt: moment(new Date(createdAt)).format(
+				'MMMM Do YYYY, h:mm:ss a',
+			),
+			email,
+			items: objectFieldToCurrency(items, 'total'),
+			total: convertToCurrency(total),
+			subtotal: convertToCurrency(subtotal),
+			shippingFee: convertToCurrency(shippingDetails.fee),
+			discountTotal: discount
+				? convertToCurrency(discount.discountTotal)
+				: 0,
 		});
 	}
 

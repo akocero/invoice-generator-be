@@ -45,6 +45,7 @@ const orderSchema = new Schema(
 		},
 		barangay: {
 			type: String,
+			required: [true, 'Barangay is Required'],
 		},
 		province: {
 			type: String,
@@ -88,13 +89,7 @@ const orderSchema = new Schema(
 		shippingDetails: {
 			fee: {
 				type: Number,
-				required: [
-					function () {
-						// Require 'special_feature' only when 'product_type' is 'special'
-						return this.productType === 'physical';
-					},
-					'Shipping is required',
-				],
+				required: [true, 'Shipping is required'],
 			},
 			place: {
 				type: String,
@@ -114,6 +109,7 @@ const orderSchema = new Schema(
 				type: Number,
 			},
 		},
+		// Order status
 		status: {
 			type: String,
 			default: 'pending',

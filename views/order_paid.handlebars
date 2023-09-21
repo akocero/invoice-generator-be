@@ -342,14 +342,11 @@
       <img src="https://res.cloudinary.com/erro/image/upload/v1695286787/Email_Logo_Flat_d3pkdv.png" alt="" style="width: 380px;">
     </div>
     
-    <h2 style="text-align: center;">Thank you for your purchase! here are your downloads:</h2>
-    <ul>
-        <li>
-            <label for="">[Product Name]</label>
-            <p>Download Link: <a href="">[Link]</a></p>
-        </li>
-    </ul>
-
-    <p>Enjoy</p>
+    <h2 style="text-align: center;">Your Order has been paid!</h2>
+    <p style="text-transform: capitalize;">Hello, {{fullName}}</p>
+    <p>We received your order #{{orderID}} on {{createdAt}} and you’ve paid for this via {{payments[0].paymentType}} with transaction number {{payments[0].transactionNumber}}.</p>
+    <p>For more details, kindly check your Papier Renei account.</p>
+    <p>Your order is being prepared, and we'll let you know when it's on the way. We hope you enjoyed your shopping experience with us and look forward to seeing you again soon!</p>
+    </div>
   </body>
 </html>

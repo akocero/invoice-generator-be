@@ -13,6 +13,7 @@ const itemSchema = new Schema(
 		productType: {
 			type: String,
 			default: 'physical',
+			enum: ['physical', 'digital'],
 		},
 		description: {
 			type: String,
@@ -56,8 +57,14 @@ const itemSchema = new Schema(
 
 		fileDownloadLink: {
 			type: String,
+			required: [
+				function () {
+					// Make fileDownloadLink required only for digital products
+					return this.productType === 'digital';
+				},
+				'Download Link is required for digital products',
+			],
 		},
-		// TODO: Need to improve this category and tags
 		tags: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
