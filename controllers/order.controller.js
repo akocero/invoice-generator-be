@@ -17,9 +17,10 @@ const store = catchUnknownError(async (req, res, next) => {
 	const doc = await Order.findById(created._id).select('-__v').lean();
 
 	// await new Email({ email: doc.email }).sendOrderDetails(doc);
-	const isSent = await new Email({ email: doc.email }).sendOrderPlaced(doc);
 
-	if (!isSent) {
+	try {
+		await new Email({ email: doc.email }).sendOrderPlaced(doc);
+	} catch (error) {
 		return next(
 			new AppError(
 				'There was an error sending the email, Please try again later!',
@@ -28,11 +29,11 @@ const store = catchUnknownError(async (req, res, next) => {
 		);
 	}
 
-	const isOwnerEmailSent = await new Email({
-		email: process.env.EMAIL_USERNAME,
-	}).sendOwnerOrderNotif();
-
-	if (!isOwnerEmailSent) {
+	try {
+		await new Email({
+			email: process.env.EMAIL_USERNAME,
+		}).sendOwnerOrderNotif();
+	} catch (error) {
 		return next(
 			new AppError(
 				'There was an error sending the email, Please try again later!',

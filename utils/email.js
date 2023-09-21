@@ -63,18 +63,13 @@ class Email {
 			context,
 		};
 
-		try {
-			await this.newTransport().sendMail(mailOptions);
-			return true;
-		} catch (error) {
-			console.log('Email Error: ', error);
-			return false;
-		}
+		await this.newTransport().sendMail(mailOptions);
+
 		// 3) Create a transport and send email
 	}
 
 	async sendFileLink() {
-		return await this.send(
+		await this.send(
 			'digital_product',
 			'Welcome to the Papierenei Family!',
 			{
@@ -84,13 +79,9 @@ class Email {
 	}
 
 	async sendOwnerOrderNotif() {
-		return await this.send(
-			'owner_order_notif',
-			'You have received an order',
-			{
-				name: 'TEST NAME',
-			},
-		);
+		await this.send('owner_order_notif', 'You have received an order', {
+			name: 'TEST NAME',
+		});
 	}
 
 	async sendOrderDetails(orderDetails) {
@@ -106,21 +97,17 @@ class Email {
 			subtotal,
 		} = orderDetails;
 
-		return await this.send(
-			'order_receipt',
-			'Thank you for your purchase!',
-			{
-				firstName,
-				fullName: firstName + ' ' + lastName,
-				paymentMethod,
-				contactNumber,
-				email,
-				items: objectFieldToCurrency(items, 'total'),
-				total: convertToCurrency(total),
-				subtotal: convertToCurrency(subtotal),
-				shippingFee: convertToCurrency(shippingDetails.fee),
-			},
-		);
+		await this.send('order_receipt', 'Thank you for your purchase!', {
+			firstName,
+			fullName: firstName + ' ' + lastName,
+			paymentMethod,
+			contactNumber,
+			email,
+			items: objectFieldToCurrency(items, 'total'),
+			total: convertToCurrency(total),
+			subtotal: convertToCurrency(subtotal),
+			shippingFee: convertToCurrency(shippingDetails.fee),
+		});
 	}
 
 	async sendOrderPlaced(orderDetails) {
@@ -138,7 +125,7 @@ class Email {
 			createdAt,
 		} = orderDetails;
 
-		return await this.send('order_place', 'Thank you for your purchase!', {
+		await this.send('order_place', 'Thank you for your purchase!', {
 			firstName,
 			fullName: firstName + ' ' + lastName,
 			orderID: _id,
@@ -158,7 +145,7 @@ class Email {
 	}
 
 	async sendLoginCode(code) {
-		return await this.send(
+		await this.send(
 			'login_code',
 			'This code is valid for only 15 minutes',
 			{
@@ -169,7 +156,7 @@ class Email {
 	}
 
 	async sendPasswordReset(url) {
-		return await this.send(
+		await this.send(
 			'password_reset',
 			'Your password reset token (valid for only 10 minutes)',
 			{ url, name: this.to },
