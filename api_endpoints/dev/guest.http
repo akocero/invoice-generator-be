@@ -11,7 +11,7 @@ content-type: application/json
 Authorization: {{token}}
 
 {
-	"email": "pyduvyny@mailinator.com",
+	"email": "ez2@mil.com",
 	"password": "password"
 }
 
@@ -44,7 +44,7 @@ content-type: application/json
 Authorization: {{token}}
 
 {
-	"email": "ez2@mil.com",
+	"email": "ez4@mil.com",
 	"password": "password",
 	"firstName": "ez",
 	"lastName": "mil",

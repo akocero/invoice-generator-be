@@ -168,9 +168,23 @@ const resetPassword = async (req, res, next) => {
 };
 
 const register = async (req, res, next) => {
-	const { firstName, lastName, mobileNumber, email } = req.body;
+	const {
+		firstName,
+		lastName,
+		mobileNumber,
+		email,
+		password,
+		passwordConfirm,
+	} = req.body;
 
-	if (!firstName || !lastName || !email || !mobileNumber) {
+	if (
+		!firstName ||
+		!lastName ||
+		!email ||
+		!mobileNumber ||
+		!password ||
+		!passwordConfirm
+	) {
 		return next(new AppError('Invalid inputs', 400));
 	}
 
@@ -185,6 +199,8 @@ const register = async (req, res, next) => {
 		lastName,
 		mobileNumber,
 		email,
+		password,
+		passwordConfirm,
 	});
 
 	if (!customer) {
@@ -299,6 +315,8 @@ const login = async (req, res, next) => {
 
 	const token = createAndSendToken(customer, req, res);
 
+	const authenticatedCustomer = await Customer.findOne({ email });
+
 	// remove email sending when login
 	// try {
 	// 	await new Email({ email }, 0).sendLoginCode();
@@ -313,11 +331,7 @@ const login = async (req, res, next) => {
 	// }
 
 	res.json({
-		customer: {
-			_id: customer.id,
-			name: `${customer.firstName} ${customer.lastName}`,
-			email: customer.email,
-		},
+		customer: authenticatedCustomer,
 		token,
 	});
 };
